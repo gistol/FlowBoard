@@ -1,0 +1,4 @@
+dev_web:
+  resource: '../web/web.yaml'
+  prefix: /
+  host: flowboard.local

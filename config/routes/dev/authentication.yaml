@@ -1,0 +1,4 @@
+dev_authentication:
+  resource: '../authentication/authentication.yaml'
+  prefix: /
+  host: authentication.flowboard.local

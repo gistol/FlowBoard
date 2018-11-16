@@ -1,0 +1,9 @@
+login:
+  path: /login
+  defaults: { _controller: App\Controller\AuthenticationControllers\LoginController::login }
+  methods: [ GET, POST ]
+
+register:
+  path: /login
+  defaults: { _controller: App\Controller\AuthenticationControllers\RegisterController::register }
+  methods: [ GET, POST ]

@@ -1,0 +1,4 @@
+web:
+  resource: 'web/web.yaml'
+  prefix: /
+  host: flowboard.app

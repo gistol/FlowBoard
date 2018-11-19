@@ -1,0 +1,20 @@
+/*
+
+   Colors of Flowboard
+
+ */
+body,
+html {
+  background-color: #1C2158; }
+
+.authentication-container {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ffffff; }
+
+.authentication-logo {
+  display: block;
+  margin: 75px auto;
+  max-width: 300px; }
+
+/*# sourceMappingURL=authentication.css.map */

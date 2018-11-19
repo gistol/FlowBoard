@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA;;;;GAIG;ACFH;IACK;EAEH,gBAAgB,EDML,OAAO;;ACFpB,yBAA0B;EAExB,OAAO,EAAE,IAAI;EACb,aAAa,ECZS,GAAG;EDazB,gBAAgB,EDPT,OAAO;;ACWhB,oBAAqB;EAEnB,OAAO,EAAE,KAAK;EACd,MAAM,EAAE,SAAS;EACjB,SAAS,EAAE,KAAK",
+"sources": ["../general/colors.scss","authentication.scss","../general/variables.scss"],
+"names": [],
+"file": "authentication.css"
+}

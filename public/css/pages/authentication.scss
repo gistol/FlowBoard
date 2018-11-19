@@ -1,0 +1,24 @@
+@import "../general/import";
+
+body,
+html {
+
+  background-color: $dark-blue;
+
+}
+
+.authentication-container {
+
+  padding: 20px;
+  border-radius: $border-radius-normal;
+  background-color: $white;
+
+}
+
+.authentication-logo {
+
+  display: block;
+  margin: 75px auto;
+  max-width: 300px;
+
+}

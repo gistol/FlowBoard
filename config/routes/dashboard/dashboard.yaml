@@ -1,0 +1,4 @@
+main_dashboard:
+  path: /
+  defaults: { _controller: App\Controller\DashboardControllers\DashboardController::dashboard }
+  methods: [ GET ]

@@ -1,0 +1,38 @@
+{
+  "name": "flowboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": " webpack --progress --colors --watch --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeroenfrenken/FlowBoard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeroenfrenken/FlowBoard/issues"
+  },
+  "homepage": "https://github.com/jeroenfrenken/FlowBoard#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "mini-toastr": "^0.8.1",
+    "vue": "^2.5.17",
+    "vue-axios": "^2.1.4",
+    "vue-notifications": "^0.9.0",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "vue-loader": "^15.4.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}

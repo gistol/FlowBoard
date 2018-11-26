@@ -18,6 +18,8 @@ import App from './App.vue';
 
 import routes from './routes';
 
+import * as types from './store/mutations';
+
 //eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
     Vue.config.devtools = false;
@@ -48,7 +50,7 @@ miniToastr.setIcon('success', 'i', {'class': 'fa fa-fw fa-check'});
 // This mean that in case of 'success' message we will call miniToastr.success(message, title, timeout, cb)
 // In case of 'error' we will call miniToastr.error(message, title, timeout, cb)
 // and etc.
-function toast({title, message, type, timeout, cb}) {
+function toast ({title, message, type, timeout, cb}) {
     return miniToastr[type](message, title, timeout, cb);
 }
 
@@ -75,12 +77,17 @@ Vue.use(VueAxios, axios);
 
 Vue.use(VueRouter);
 
+let token = document.getElementById('token').getAttribute('content');
+
 new Vue({
     el: '#app',
     store,
     router,
     components: {
         App
+    },
+    created () {
+        this.$store.commit(types.SAVE_TOKEN, token)
     },
     template: '<App />'
 });

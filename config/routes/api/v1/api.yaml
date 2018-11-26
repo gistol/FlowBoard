@@ -1,0 +1,9 @@
+get_projects_v1:
+  path: /{org}/projects
+  defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::getProjects }
+  methods: [ GET, OPTIONS ]
+
+get_project_v1:
+  path: /{org}/project/{project}
+  defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::getProject }
+  methods: [ GET, OPTIONS ]

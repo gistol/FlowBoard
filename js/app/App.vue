@@ -1,10 +1,27 @@
 <template>
 
-  <div>
+    <div>
 
+        <sidebar />
 
-    <router-view />
+        <router-view style="margin-left: 250px;" />
 
-  </div>
+    </div>
 
 </template>
+
+<script>
+
+    import sidebar from './components/general/sidebar.vue';
+
+    export default {
+
+        components: {
+
+            sidebar
+
+        }
+
+    }
+
+</script>

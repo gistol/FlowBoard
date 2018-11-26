@@ -5,6 +5,11 @@
  */
 body,
 html {
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif; }
+
+body,
+html {
   background-color: #1C2158; }
 
 .authentication-container {

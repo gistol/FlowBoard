@@ -68,6 +68,16 @@ class User
     protected $tokens;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\OrganisationUsers", mappedBy="users")
+     */
+    private $organisations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UsersProject", mappedBy="users")
+     */
+    private $projects;
+
+    /**
      * @return mixed
      */
     public function getId()

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="column_status")
  */
-class ColumnStatus
+class ColumnStatus implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -39,13 +39,77 @@ class ColumnStatus
     private $isDone;
 
     /**
-     * @ORM\Column(type="boolean", length=1)
+     * @return mixed
      */
-    private $isInProgress;
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * @ORM\Column(type="boolean", length=1)
+     * @param mixed $id
      */
-    private $isIdle;
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumn()
+    {
+        return $this->column;
+    }
+
+    /**
+     * @param mixed $column
+     */
+    public function setColumn($column): void
+    {
+        $this->column = $column;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisDone()
+    {
+        return $this->isDone;
+    }
+
+    /**
+     * @param mixed $isDone
+     */
+    public function setIsDone($isDone): void
+    {
+        $this->isDone = $isDone;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            '_id' => $this->getId(),
+            'name' => $this->getName(),
+            'is_done' => $this->getisDone()
+        ];
+    }
+
 
 }

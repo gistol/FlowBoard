@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @ORM\HasLifecycleCallbacks()
  */
-class User
+class User implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -73,9 +73,19 @@ class User
     private $organisations;
 
     /**
-     * @ORM\OneToMany(targetEntity="UsersProject", mappedBy="users")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectUsers", mappedBy="users")
      */
     private $projects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="assigned")
+     */
+    private $assigndIssues;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="reporter")
+     */
+    private $reportedIssues;
 
     /**
      * @return mixed
@@ -181,6 +191,15 @@ class User
         $this->tokens = $tokens;
     }
 
+    public function jsonSerialize()
+    {
+        return [
+            '_id' => $this->getId(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'email' => $this->getEmail()
+        ];
+    }
 
 
 }

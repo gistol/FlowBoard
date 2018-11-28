@@ -7,6 +7,11 @@
  */
 namespace App\EventSubscriber;
 
+use App\Controller\Utils\PermissionUtils\OrganisationProjectPermission;
+use App\Entity\Organisation;
+use App\Entity\OrganisationUsers;
+use App\Entity\Project;
+use App\Entity\ProjectUsers;
 use App\Entity\UserToken;
 use App\Responses\ApiResponses;
 use App\Interfaces\ApiAuthenticationInterface;
@@ -74,6 +79,66 @@ class EventSubscriber implements EventSubscriberInterface
             }
 
             $this->container->set('user', $user->getUser());
+
+            /*
+             * Additional permission checking
+             */
+
+            $orgName = $request->attributes->get('org');
+
+            $projectName = $request->attributes->get('project');
+
+            if ($orgName !== null || $projectName !== null) {
+
+                $organisation = $doctrine->getRepository(Organisation::class)->findOneBy([
+                    'name' => $orgName
+                ]);
+
+                if ($organisation === null) return 0; //TODO: implement bad request
+
+                $this->container->set('organisation', $organisation);
+
+                /** @var OrganisationProjectPermission $permissionUtil */
+                $permissionUtil = $this->container->get('App\Controller\Utils\PermissionUtils\OrganisationProjectPermission');
+
+                if ($orgName !== null && $projectName === null) {
+
+                    $access = $permissionUtil->accessOrganisation($user->getUser(), $organisation);
+
+                    if ($access === OrganisationUsers::NO_ACCESS) {
+                        return $event->setController(function () {
+                            return ApiResponses::notAuthorized();
+                        });
+                    };
+
+//                if ($access === OrganisationUsers::ACCESS_READ && $request->getMethod() === 'get')
+
+                }
+
+                if ($orgName !== null && $projectName !== null) {
+
+                    $project = $doctrine->getRepository(Project::class)->findOneBy([
+                        'name' => $projectName
+                    ]);
+
+                    if ($project === null) return 0; //TODO: implement bad request
+
+                    $access = $permissionUtil->accessProject($user->getUser(), $project);
+
+                    if ($access === ProjectUsers::NO_ACCESS) {
+                        return $event->setController(function () {
+                            return ApiResponses::notAuthorized();
+                        });
+                    };
+
+                    $this->container->set('project', $project);
+
+
+
+                }
+
+
+            }
 
 
         }

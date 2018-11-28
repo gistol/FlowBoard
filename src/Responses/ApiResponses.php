@@ -15,9 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiResponses
 {
 
-    static function okResponse() {
+    static function okResponse($data = [], $message = '') {
 
-        return new JsonResponse();
+        $out = [
+            'ok' => true
+        ];
+
+        if ($message !== '') {
+            $out['message'] = $message;
+        }
+
+        if (!empty($data)) {
+            $out['data'] = $data;
+        }
+
+        return new JsonResponse($out, Response::HTTP_OK);
 
     }
 

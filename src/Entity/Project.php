@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="project")
  */
-class Project
+class Project implements \JsonSerializable
 {
 
     /**
@@ -25,12 +25,12 @@ class Project
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UsersProject", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="ProjectUsers", mappedBy="project")
      */
     private $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="projects")
      * @ORM\JoinColumn(name="org_id", referencedColumnName="id")
      */
     private $organisation;
@@ -111,12 +111,26 @@ class Project
         $this->name = $name;
     }
 
+    private function orderSort($a,$b) {
+        return $a->getOrder() > $b->getOrder();
+    }
+
     /**
      * @return mixed
      */
     public function getColumns()
     {
-        return $this->columns;
+        $res = [];
+
+        foreach ($this->columns as $column) {
+            $res[] = $column;
+        }
+
+
+
+        usort($res, array($this, "orderSort"));
+
+        return $res;
     }
 
     /**
@@ -142,5 +156,17 @@ class Project
     {
         $this->created = $created;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            '_id' => $this->getName(),
+            'org' => $this->getOrganisation()->getName(),
+            'name' => $this->getName(),
+            'columns' => $this->getColumns(),
+            'created' => $this->getCreated(),
+        ];
+    }
+
 
 }

@@ -1,7 +1,11 @@
-import Vue from 'vue/dist/vue'
 import Vuex from 'vuex'
+import Vue from 'vue/dist/vue'
 
-Vue.use(Vuex)
+import actions from './actions';
+import getters from './getters';
+import mutations from './mutations';
+
+Vue.use(Vuex);
 
 //  eslint-disable-next-line no-undef
 Vue.config.performance = process.env.NODE_ENV !== 'production';
@@ -13,5 +17,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default new Vuex.Store({
-    modules: {}
+    state: {
+        token: '',
+        org: 'flowboard',
+        project: {},
+        projects: [],
+        issue: false
+    },
+    mutations: mutations,
+    actions: actions,
+    getters: getters
 });

@@ -13,13 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
- * @ORM\Table(name="users_project")
+ * @ORM\Table(name="project_users")
  */
-class UsersProject
+class ProjectUsers
 {
 
+    public const NO_ACCESS = 0;
     public const ACCESS_READ = 10;
     public const ACCESS_WRITE = 50;
+    public const ACCESS_OWNER = 100;
 
     /**
      * @ORM\Id()
@@ -29,13 +31,13 @@ class UsersProject
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="users")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="projects")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

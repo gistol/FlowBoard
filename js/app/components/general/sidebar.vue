@@ -37,12 +37,12 @@
 
         <div class="menu">
 
-          <p>PROJECTS</p>
+          <p>BOARDS</p>
 
           <ul>
 
             <li
-              v-for="(value, key) in menu.bottom"
+              v-for="(value, key) in projects"
               :key="key"
               @click="goToProject($event, value)"
             >
@@ -70,6 +70,8 @@
 
 <script>
 
+    import * as types from '../../store/mutationConsts';
+
     export default {
 
         data () {
@@ -86,19 +88,21 @@
                             name: 'Settings',
                             link: 'settings'
                         }
-                    ],
-                    bottom: [
-                        {
-                            org: 'bla-org',
-                            name: 'project 1',
-                            project: 'bla-project'
-                        }
                     ]
                 }
             }
         },
         created () {
 
+            this.$store.dispatch(types.GET_PROJECTS);
+
+        },
+        computed: {
+            projects () {
+
+                return this.$store.getters.getProjects;
+
+            }
         },
         methods: {
 
@@ -118,7 +122,7 @@
                 this.$router.push({
                     params: {
                         org: val.org,
-                        project: val.project
+                        project: val._id
                     },
                     name: 'project'
                 })

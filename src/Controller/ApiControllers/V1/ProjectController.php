@@ -9,23 +9,33 @@
 namespace App\Controller\ApiControllers\V1;
 
 
+use App\Entity\Organisation;
+use App\Entity\Project;
 use App\Interfaces\ApiAuthenticationInterface;
 use App\Responses\ApiResponses;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 class ProjectController extends Controller implements ApiAuthenticationInterface
 {
 
-    public function getProjects(Request $request, $org) {
+    public function getProjects(SerializerInterface $serializer, Request $request, $org) {
 
-        return ApiResponses::okResponse();
+        /** @var Organisation $organisation */
+        $organisation = $this->get('organisation');
+
+        return ApiResponses::okResponse($organisation->getProjects());
 
     }
 
     public function getProject(Request $request, $org, $project) {
 
+        /** @var Project $project */
+        $project = $this->get('project');
 
+        return ApiResponses::okResponse($project);
 
     }
 

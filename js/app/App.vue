@@ -4,7 +4,10 @@
 
         <sidebar />
 
-        <router-view style="margin-left: 250px;" />
+        <div class="bootstrap-wrapper" style="width: calc(100% - 250px);margin-left: 250px;">
+          <router-view />
+        </div>
+
 
     </div>
 

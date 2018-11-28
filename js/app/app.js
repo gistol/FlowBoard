@@ -18,7 +18,7 @@ import App from './App.vue';
 
 import routes from './routes';
 
-import * as types from './store/mutations';
+import * as types from './store/mutationConsts';
 
 //eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {

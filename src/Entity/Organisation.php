@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="organisation")
  */
-class Organisation
+class Organisation implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -38,7 +38,7 @@ class Organisation
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="organisation")
      */
     private $projects;
 
@@ -116,7 +116,11 @@ class Organisation
      */
     public function getProjects()
     {
-        return $this->projects;
+        $out = [];
+
+        foreach ($this->projects as $project) $out[] = $project;
+
+        return $out;
     }
 
     /**
@@ -142,5 +146,14 @@ class Organisation
     {
         $this->created = $created;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'projects' => $this->getProjects()
+        ];
+    }
+
 
 }

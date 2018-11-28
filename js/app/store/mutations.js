@@ -1,7 +1,30 @@
-/*
+import Vue from 'vue/dist/vue.min';
+import * as types from './mutationConsts';
 
-    Vuex mutations
+export default {
 
- */
+    [types.SAVE_TOKEN] (state, token) {
 
-export const SAVE_TOKEN = 'SAVE_TOKEN';
+        state.token = token;
+
+    },
+
+    [types.SAVE_PROJECTS] (state, projects) {
+
+        Vue.set(state, 'projects', projects);
+
+    },
+
+    [types.SAVE_PROJECT] (state, project) {
+
+        Vue.set(state, 'project', project);
+
+    },
+
+    [types.SHOW_ISSUE] (state, issue) {
+
+        Vue.set(state, 'issue', issue);
+
+    }
+
+}

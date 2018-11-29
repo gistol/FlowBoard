@@ -10,7 +10,7 @@ import VueNotifications from 'vue-notifications';
 import miniToastr from 'mini-toastr';
 
 //Get the store and mutations
-import store from './store/Index';
+import store from './store/index';
 
 import VueRouter from 'vue-router';
 

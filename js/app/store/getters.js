@@ -16,6 +16,12 @@ export default {
 
         return state.issue;
 
+    },
+
+    getProjectUsers (state) {
+
+        return state.projectUsers;
+
     }
 
 }

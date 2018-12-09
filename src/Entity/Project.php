@@ -25,6 +25,11 @@ class Project implements \JsonSerializable
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=4)
+     */
+    private $key;
+
+    /**
      * @ORM\OneToMany(targetEntity="ProjectUsers", mappedBy="project")
      */
     private $users;
@@ -46,6 +51,11 @@ class Project implements \JsonSerializable
     private $columns;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="project")
+     */
+    private $issues;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created;
@@ -61,6 +71,22 @@ class Project implements \JsonSerializable
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key): void
+    {
+        $this->key = $key;
     }
 
     /**
@@ -122,11 +148,7 @@ class Project implements \JsonSerializable
     {
         $res = [];
 
-        foreach ($this->columns as $column) {
-            $res[] = $column;
-        }
-
-
+        foreach ($this->columns as $column) $res[] = $column;
 
         usort($res, array($this, "orderSort"));
 
@@ -139,6 +161,22 @@ class Project implements \JsonSerializable
     public function setColumns($columns): void
     {
         $this->columns = $columns;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIssues()
+    {
+        return $this->issues;
+    }
+
+    /**
+     * @param mixed $issues
+     */
+    public function setIssues($issues): void
+    {
+        $this->issues = $issues;
     }
 
     /**
@@ -161,6 +199,7 @@ class Project implements \JsonSerializable
     {
         return [
             '_id' => $this->getName(),
+            'key' => $this->getKey(),
             'org' => $this->getOrganisation()->getName(),
             'name' => $this->getName(),
             'columns' => $this->getColumns(),

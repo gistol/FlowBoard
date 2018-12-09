@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -25,17 +26,36 @@ class Issue implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="integer", length=4)
+     * @ORM\Column(type="integer")
      */
     private $projectId;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="issues")
+     * @ORM\JoinColumn(name="project", referencedColumnName="id")
+     */
+    private $project;
+
+    /**
+     * @Assert\NotBlank(
+     *     message="Title can not be blank"
+     * )
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Your issue title must be at least {{ limit }} characters long",
+     *      maxMessage = "Your issue title cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(type="string", length=100)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="text", length=1000)
+     * @Assert\Length(
+     *      max = 100,
+     *      maxMessage = "Your issue comment cannot be longer than {{ limit }} characters"
+     * )
+     * @ORM\Column(type="text", length=1000, nullable=true)
      */
     private $comment;
 
@@ -58,6 +78,9 @@ class Issue implements \JsonSerializable
     private $reporter;
 
     /**
+     * @Assert\NotBlank(
+     *     message="status can not be blank"
+     * )
      * @ORM\ManyToOne(targetEntity="App\Entity\IssueType", inversedBy="issues")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      */
@@ -90,6 +113,22 @@ class Issue implements \JsonSerializable
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param mixed $project
+     */
+    public function setProject($project): void
+    {
+        $this->project = $project;
     }
 
     /**
@@ -224,8 +263,9 @@ class Issue implements \JsonSerializable
     {
         return [
             '_id' => $this->getProjectId(),
+            'key' => $this->getProject()->getKey() . '-' . $this->getProjectId(),
             'title' => $this->getTitle(),
-            'text' => $this->getComment(),
+            'comment' => $this->getComment(),
             'status' => $this->getStatus(),
             'created' => $this->getCreated(),
             'assignee' => $this->getAssigned(),

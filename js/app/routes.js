@@ -1,6 +1,7 @@
-import home from './components/pages/home.vue';
-import settings from './components/pages/settings.vue';
-import project from './components/pages/project.vue';
+import home from './components/pages/home/home.vue';
+import project from './components/pages/project/project.vue';
+import settings from './components/pages/settings/settings.vue';
+import notFound from './components/pages/general/notFound.vue';
 
 export default [
     {
@@ -17,5 +18,9 @@ export default [
         path: '/:org/:project',
         name: 'project',
         component: project
+    },
+    {
+        path: '*',
+        component: notFound
     }
 ];

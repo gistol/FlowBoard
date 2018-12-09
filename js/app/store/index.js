@@ -21,8 +21,9 @@ export default new Vuex.Store({
         token: '',
         org: 'flowboard',
         project: {},
-        projects: [],
-        issue: false
+        projects: false,
+        issue: false,
+        projectUsers: false
     },
     mutations: mutations,
     actions: actions,

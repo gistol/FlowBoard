@@ -15,6 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiResponses
 {
 
+    static function badRequest(String $property, String $message) {
+
+        $out = [
+            'ok' => false
+        ];
+
+        $out['data'] = [
+            'property' => $property,
+            'message' => $message
+        ];
+
+        return new JsonResponse($out, Response::HTTP_BAD_REQUEST);
+
+    }
+
     static function okResponse($data = [], $message = '') {
 
         $out = [
@@ -39,6 +54,15 @@ class ApiResponses
             'ok' => false,
             'message' => 'not authorized'
         ], Response::HTTP_UNAUTHORIZED);
+
+    }
+
+    static function forbidden() {
+
+        return new JsonResponse([
+            'ok' => false,
+            'message' => 'not allowed'
+        ], Response::HTTP_FORBIDDEN);
 
     }
 

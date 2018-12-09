@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jeroenfrenken/FlowBoard#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "lodash": "^4.17.11",
     "mini-toastr": "^0.8.1",
     "vue": "^2.5.17",
     "vue-axios": "^2.1.4",

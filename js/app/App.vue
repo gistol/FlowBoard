@@ -9,6 +9,8 @@
         </div>
 
 
+        <modal-loader />
+
     </div>
 
 </template>
@@ -16,15 +18,13 @@
 <script>
 
     import sidebar from './components/general/sidebar.vue';
+    import ModalLoader from "./components/modals/modalLoader.vue";
 
     export default {
-
         components: {
-
+            ModalLoader,
             sidebar
-
         }
-
     }
 
 </script>

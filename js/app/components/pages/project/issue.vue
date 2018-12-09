@@ -2,8 +2,8 @@
 
   <div
     class="issue"
+    @click="makeIssueActive"
   >
-
 
     <div class="issue-img">
       <img
@@ -15,11 +15,13 @@
     <div class="issue-content">
 
       <p class="issue-description">
-        <span>FB-{{ data._id }}</span> {{ data.title }}
+        <span>{{ data.key }}</span> {{ data.title }}
       </p>
 
       <p class="issue-assignee">
-        {{ data.assignee.firstName }} {{ data.assignee.lastName }}
+        <span v-if="data.assignee !== null">
+          {{ data.assignee.firstName }} {{ data.assignee.lastName }}
+        </span>
       </p>
 
     </div>
@@ -30,19 +32,34 @@
 
 <script>
 
+    import Eventbus from '../../../event/Eventbus';
+    import events from "../../../consts/eventConsts";
+
     export default {
 
         name: 'issue',
         props: {
+            issueKey: {
+                type: String,
+                default: ""
+            },
             data: {
                 type: Object,
                 default () {
                     return {}
                 }
             }
+        },
+        methods: {
+            makeIssueActive () {
+
+                Eventbus.$emit(events.MODAL_REQUEST, {
+                    modal: 'modalShowIssue',
+                    payload: this.data
+                });
+
+            }
         }
-
-
     }
 
 </script>
@@ -51,6 +68,17 @@
 
   .column .column-content .issue {
 
+      &:hover,
+      .active {
+
+        background-color: #048DEF;
+
+      }
+
+
+    border-radius: 5px;
+
+      padding: 10px;
       cursor: pointer;
 
       p {

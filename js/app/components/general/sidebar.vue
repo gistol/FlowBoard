@@ -60,6 +60,22 @@
 
             </li>
 
+            <li
+              v-if="projects === false"
+            >
+
+              <a
+                href="#"
+              >
+
+                <i class="fas fa-spinner fa-spin" />
+
+                Loading projects
+
+              </a>
+
+            </li>
+
           </ul>
 
         </div>
@@ -70,7 +86,7 @@
 
 <script>
 
-    import * as types from '../../store/mutationConsts';
+    import mutations from '../../consts/mutationConsts';
 
     export default {
 
@@ -87,6 +103,11 @@
                             icon: 'fa-cog',
                             name: 'Settings',
                             link: 'settings'
+                        },
+                        {
+                            icon: 'fa-sign-out-alt',
+                            name: 'Logout',
+                            link: 'settings'
                         }
                     ]
                 }
@@ -94,15 +115,19 @@
         },
         created () {
 
-            this.$store.dispatch(types.GET_PROJECTS);
+            this.$store.dispatch(mutations.GET_PROJECTS);
 
         },
         computed: {
+
             projects () {
 
-                return this.$store.getters.getProjects;
+                if (this.$store.getters.getProjects === false) return false;
+
+                return this.$store.getters.getProjects.projects;
 
             }
+
         },
         methods: {
 

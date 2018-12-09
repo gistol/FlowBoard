@@ -22,8 +22,10 @@
 
         <draggable
           v-model="value.issues"
+          :data-id="value.order"
           :options="{group: project._id}"
           class="column-content"
+          @add="onAdd"
         >
           <p v-if="value.issues.length === 0" class="issue-empty">
             This column doesn't have any issues 😭
@@ -33,6 +35,7 @@
             v-for="(val, key) in value.issues"
             :key="key"
             :data="val"
+            :data-id="val._id"
           />
         </draggable>
 
@@ -44,8 +47,9 @@
 
 <script>
 
+    import issue from './issue.vue';
     import draggable from 'vuedraggable';
-    import issue from '../general/issue.vue';
+    import api from '../../../store/axios';
 
     export default {
         components: {
@@ -57,6 +61,47 @@
                 type: Object,
                 default() { return {} }
             }
+        },
+        methods: {
+
+            onAdd (e) {
+
+                api(this.$store.state.token)
+                    .put('/' + this.$store.state.org + '/' + this.project.name + '/issue/move',
+                        {
+                            column: e.to.getAttribute('data-id'),
+                            issue: e.to.children[e.newIndex].getAttribute('data-id')
+                        }
+                    ).then(() => { }).catch((res) => {
+
+                        console.log(res);
+
+                        if (res.response.status === 400) {
+                            this.moveError({
+                                title: res.response.data.data.property,
+                                message: res.response.data.data.message
+                            });
+                        } else if (res.response.status === 403) {
+                            this.moveError({
+                                title: 'Not authorized',
+                                message: 'You are not authorized to move issues'
+                            });
+                        } else {
+                            this.moveError();
+                        }
+
+                    });
+            }
+
+        },
+        notifications: {
+
+            moveError: {
+                title: 'move failed',
+                message: 'move failed',
+                type: 'error'
+            }
+
         }
     }
 

@@ -34,7 +34,7 @@ class OrganisationProjectPermission
             'organisation' => $organisation
         ]);
 
-        if ($res === null) return 0;
+        if ($res === null) return OrganisationUsers::NO_ACCESS;
 
         return $res->getAccess();
 

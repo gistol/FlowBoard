@@ -18,7 +18,7 @@ import App from './App.vue';
 
 import routes from './routes';
 
-import * as types from './store/mutationConsts';
+import mutations from './consts/mutationConsts';
 
 //eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
@@ -87,7 +87,7 @@ new Vue({
         App
     },
     created () {
-        this.$store.commit(types.SAVE_TOKEN, token)
+        this.$store.commit(mutations.SAVE_TOKEN, token)
     },
     template: '<App />'
 });

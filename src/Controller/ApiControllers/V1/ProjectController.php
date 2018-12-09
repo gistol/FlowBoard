@@ -29,7 +29,7 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
         $organisation = $this->get('organisation');
 
         return ApiResponses::okResponse([
-            'access' => $this->get('organisation_access'),
+            'access' => $this->get('organisationAccess'),
             'projects' => $organisation->getProjects()
         ]);
 
@@ -41,7 +41,7 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
         $project = $this->get('project');
 
         return ApiResponses::okResponse([
-            'access' => $this->get('project_access'),
+            'access' => $this->get('projectAccess'),
             'project' => $project
         ]);
 

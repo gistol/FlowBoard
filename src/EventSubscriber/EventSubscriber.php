@@ -115,7 +115,7 @@ class EventSubscriber implements EventSubscriberInterface
                     $access = $permissionUtil->accessOrganisation($user->getUser(), $organisation);
 
                     // Set org access to the container for use in controllers
-                    $this->container->set('organisation_access', $access);
+                    $this->container->set('organisationAccess', $access);
 
                 }
 
@@ -132,7 +132,7 @@ class EventSubscriber implements EventSubscriberInterface
 
                     $this->container->set('project', $project);
 
-                    $this->container->set('project_access', $access);
+                    $this->container->set('projectAccess', $access);
 
                 }
 

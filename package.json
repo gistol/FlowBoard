@@ -50,6 +50,7 @@
     "eslint-plugin-vue": "^4.7.1",
     "node-sass": "^4.10.0",
     "sass-loader": "^7.1.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "vue-loader": "^15.4.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.5.17",

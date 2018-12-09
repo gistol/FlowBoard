@@ -1,7 +1,9 @@
 'use strict'
 
 const path = require('path');
+const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -50,3 +52,21 @@ module.exports = {
         new VueLoaderPlugin()
     ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map';
+
+    module.exports.plugins.push(
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        })
+    )
+
+    module.exports.plugins.push(
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
+    )
+}

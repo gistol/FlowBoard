@@ -12,6 +12,18 @@
       :update="updateFunc"
       :close="close"
     />
+    <modal-create-column
+      v-if="show.modalCreateColumn"
+      :payload="payload"
+      :update="updateFunc"
+      :close="close"
+    />
+    <modal-update-issue
+      v-if="show.modalUpdateIssue"
+      :payload="payload"
+      :update="updateFunc"
+      :close="close"
+    />
   </div>
 </template>
 
@@ -21,17 +33,23 @@
     import events from '../../consts/eventConsts';
     import ModalCreateIssue from "./modalCreateIssue.vue";
     import ModalShowIssue from "./modalShowIssue.vue";
+    import ModalCreateColumn from "./modalCreateColumn.vue";
+    import ModalUpdateIssue from "./modalUpdateIssue.vue";
 
     export default {
         name: 'ModalLoader',
         components: {
+            ModalUpdateIssue,
+            ModalCreateColumn,
             ModalShowIssue,
             ModalCreateIssue
         },
         data() {
             return {
                 show: {
+                    modalCreateColumn: false,
                     modalCreateIssue: false,
+                    modalUpdateIssue: false,
                     modalShowIssue: false
                 },
                 payload: {},
@@ -42,6 +60,7 @@
         },
         created() {
             Eventbus.$on(events.MODAL_REQUEST, value => {
+                this.close();
                 this.show[value.modal] = true;
                 this.payload = value.payload;
                 this.updateFunc = value.callBack;

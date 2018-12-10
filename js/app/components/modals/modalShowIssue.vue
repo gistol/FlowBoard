@@ -87,6 +87,13 @@
 
       <span>{{ payload.key }}</span>
 
+
+      <button
+        @click="updateIssue($event)"
+      >
+        Update issue
+      </button>
+
     </div>
 
   </modal>
@@ -94,6 +101,8 @@
 </template>
 <script>
     import Modal from "../ui/modal.vue";
+    import Eventbus from '../../event/Eventbus';
+    import events from '../../consts/eventConsts';
 
     export default {
         components: {
@@ -116,6 +125,23 @@
                     return 0;
                 }
             }
+        },
+        methods: {
+
+            updateIssue(e) {
+
+                e.preventDefault();
+
+                Eventbus.$emit(events.MODAL_REQUEST, {
+                    modal: 'modalUpdateIssue',
+                    payload: this.payload,
+                    callback() {
+
+                    }
+                })
+
+            }
+
         }
     }
 </script>

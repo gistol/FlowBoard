@@ -4,20 +4,20 @@
 
     <div v-if="project !== false">
 
-      <div v-if="project.project.columns.length === 0">
-
-        Awwwh snap no columns...
-
-      </div>
-
       <div v-if="project.access > ACCESS_READ">
 
         <button
+          v-if="project.project.columns.length !== 0"
           @click="createIssue($event)"
         >
           Create issue
         </button>
 
+        <button
+          @click="createColumn($event)"
+        >
+          Create column
+        </button>
       </div>
 
       <column
@@ -95,6 +95,22 @@
                    }
                 });
 
+            },
+            createColumn (e) {
+
+                e.preventDefault();
+
+                Eventbus.$emit(events.MODAL_REQUEST, {
+                    modal: 'modalCreateColumn',
+                    payload: {
+                        project: this.project.project.name
+                    },
+                    callBack () {
+                        this.$store.commit(mutations.SAVE_PROJECT, false);
+                        this.$store.dispatch(mutations.GET_PROJECT, this.$route.params.project);
+                    }
+                })
+
             }
         }
     }
@@ -121,6 +137,18 @@
       margin-right: 15px;
 
     }
+
+  }
+
+  .project {
+
+      .columns {
+
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+
+      }
 
   }
 

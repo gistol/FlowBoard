@@ -111,7 +111,7 @@
 
   .column {
 
-    float:left;
+    flex: 0 0 auto;
     margin: 20px;
     width: 275px;
   }

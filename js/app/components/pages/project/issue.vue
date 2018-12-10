@@ -104,10 +104,13 @@
       .issue-content {
 
           padding: 0 5px;
+          max-width: 95%;
 
           .issue-description {
 
               font-size: 18px;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
 
               span {
 

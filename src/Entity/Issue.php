@@ -271,12 +271,14 @@ class Issue implements \JsonSerializable
     {
         return [
             '_id' => $this->getProjectId(),
+            'projectId' => $this->getProjectId(),
             'key' => $this->getProject()->getKey() . '-' . $this->getProjectId(),
             'title' => $this->getTitle(),
             'comment' => $this->getComment(),
             'status' => $this->getStatus(),
             'created' => $this->getCreated(),
             'assignee' => $this->getAssigned(),
+            'project' => $this->getProject()->getName(),
             'reporter' => $this->getReporter()
         ];
     }

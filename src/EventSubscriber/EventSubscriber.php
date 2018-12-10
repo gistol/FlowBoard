@@ -100,7 +100,11 @@ class EventSubscriber implements EventSubscriberInterface
                     'name' => $orgName
                 ]);
 
-                if ($organisation === null) return ApiResponses::badRequest('org', 'Organisation not found');
+                if ($organisation === null) {
+                    return $event->setController(function () {
+                        return ApiResponses::badRequest('org', 'Organisation not found');
+                    });
+                }
 
                 $this->container->set('organisation', $organisation);
 
@@ -127,7 +131,11 @@ class EventSubscriber implements EventSubscriberInterface
                         'organisation' => $organisation
                     ]);
 
-                    if ($project === null) return 0; //TODO: implement bad request
+                    if ($project === null) {
+                        return $event->setController(function () {
+                            return ApiResponses::badRequest('project', 'Project not found');
+                        });
+                    }
 
                     $access = $permissionUtil->accessProject($user->getUser(), $project);
 

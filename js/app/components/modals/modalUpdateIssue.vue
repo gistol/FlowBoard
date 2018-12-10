@@ -6,7 +6,7 @@
 
     <div slot="header">
 
-      <p>Create issue</p>
+      <p>Update issue</p>
 
     </div>
 
@@ -91,7 +91,7 @@
         <button
           @click="createIssue($event)"
         >
-          Create issue
+          Update issue
         </button>
 
       </div>
@@ -134,6 +134,11 @@
         },
         created () {
 
+            this.issue = JSON.parse(JSON.stringify(this.payload));
+
+            this.issue.status = this.issue.status.name;
+            this.issue.assigned = (this.issue.assignee === null ? "" : this.issue.assignee.email);
+
             if (this.projectUsers === false) {
                 this.$store.dispatch(mutations.GET_PROJECT_USERS, this.payload.project);
             }
@@ -151,10 +156,10 @@
                 loading: false,
                 error: null,
                 issue: {
-                  status: 'task',
-                  title: '',
-                  comment: null,
-                  assigned: ''
+                    status: 'task',
+                    title: '',
+                    comment: null,
+                    assigned: ''
                 }
             }
         },
@@ -166,20 +171,17 @@
                 this.error = null;
                 this.loading = true;
 
-                if (this.issue.assigned === "") this.issue.assigned = null;
-                if (this.issue.comment === "") this.issue.comment = null;
-
                 api(this.$store.state.token)
-                    .post('/' + this.$store.state.org + '/' + this.payload.project + '/issue/create',
+                    .put('/' + this.$store.state.org + '/' + this.payload.project + '/issue/update',
                         this.issue
                     )
                     .then((res) => {
                         this.loading = false;
                         this.showIssueCreateSuccess();
-                        this.update(res.data.data);
+                        this.$store.commit(mutations.SAVE_PROJECT, false);
+                        this.$store.dispatch(mutations.GET_PROJECT, this.payload.project);
                         this.close();
                     }).catch((res) => {
-                        console.log(res);
                         this.loading = false;
                         if (res.status === 400) {
                             this.error = res.response.data.data.message;
@@ -194,8 +196,8 @@
         },
         notifications: {
             showIssueCreateSuccess: {
-                title: 'Issue created',
-                message: 'You\'re issue is created',
+                title: 'Issue updated',
+                message: 'You\'re issue is updated',
                 type: 'success'
             }
         }

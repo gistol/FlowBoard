@@ -38,7 +38,7 @@ class Organisation implements \JsonSerializable
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="organisation")
+     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="organisation", cascade={"remove"})
      */
     private $projects;
 

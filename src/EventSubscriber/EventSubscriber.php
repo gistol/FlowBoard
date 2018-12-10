@@ -123,7 +123,8 @@ class EventSubscriber implements EventSubscriberInterface
                 if ($orgName !== null && $projectName !== null) {
 
                     $project = $doctrine->getRepository(Project::class)->findOneBy([
-                        'name' => $projectName
+                        'name' => $projectName,
+                        'organisation' => $organisation
                     ]);
 
                     if ($project === null) return 0; //TODO: implement bad request
@@ -141,6 +142,7 @@ class EventSubscriber implements EventSubscriberInterface
                  *
                  * NO_ACCESS block all requests
                  * ACCESS_READ block all request expect get
+                 * ACCESS_WRITE block all delete requests
                  *
                  * Additional access checking is done in the controller
                  */
@@ -151,6 +153,9 @@ class EventSubscriber implements EventSubscriberInterface
                         break;
                     case OrganisationUsers::ACCESS_READ:
                         $block = $request->getMethod() !== 'GET';
+                        break;
+                    case OrganisationUsers::ACCESS_WRITE:
+                        $block = $request->getMethod() === 'DELETE';
                         break;
                     default:
                         $block = false;

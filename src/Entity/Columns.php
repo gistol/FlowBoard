@@ -9,9 +9,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\ColumnsRepository")
  * @ORM\Table(name="columns")
  */
 class Columns implements \JsonSerializable
@@ -24,11 +25,25 @@ class Columns implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="integer", length=2)
+     * @Assert\NotBlank(
+     *     message="order can not be blank"
+     * )
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @ORM\Column(type="integer", length=2, name="order_column")
      */
     private $order;
 
     /**
+     * @Assert\NotBlank(
+     *     message="status can not be blank"
+     * )
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\ManyToOne(targetEntity="App\Entity\ColumnStatus", inversedBy="column")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id")
      */
@@ -41,7 +56,7 @@ class Columns implements \JsonSerializable
     private $project;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="column")
+     * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="column", cascade={"remove"})
      */
     private $issues;
 
@@ -115,6 +130,8 @@ class Columns implements \JsonSerializable
     public function getIssues()
     {
         $res = [];
+
+        if ($this->issues === null) $this->issues = [];
 
         foreach ($this->issues as $issue) $res[] = $issue;
 

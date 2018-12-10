@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -25,7 +26,7 @@ class Project implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, name="project_key")
      */
     private $key;
 
@@ -41,12 +42,26 @@ class Project implements \JsonSerializable
     private $organisation;
 
     /**
+     * @Assert\NotBlank(
+     *     message="Name can not be blank"
+     * )
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 25,
+     *     minMessage = "Project name must be at least {{ limit }} characters long",
+     *     maxMessage = "Project name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[_A-z0-9]*((-)*[_A-z0-9])*$/",
+     *     match=true,
+     *     message="Project name can not contain spaces or special characters"
+     * )
      * @ORM\Column(type="string", length=25)
      */
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Columns", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\Columns", mappedBy="project", cascade={"remove"})
      */
     private $columns;
 
@@ -147,6 +162,8 @@ class Project implements \JsonSerializable
     public function getColumns()
     {
         $res = [];
+
+        if ($this->columns === null) $this->columns = [];
 
         foreach ($this->columns as $column) $res[] = $column;
 

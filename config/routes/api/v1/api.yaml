@@ -15,13 +15,27 @@ get_project_users_v1:
   defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::getProjectUsers }
   methods: [ GET, OPTIONS ]
 
+get_org_columns_v1:
+  path: /{org}/columns
+  defaults: { _controller: App\Controller\ApiControllers\V1\ColumnController::getColumns }
+  methods: [ GET, OPTIONS ]
+
 # POST ROUTES
+
+project_create_v1:
+  path: /{org}/project/create
+  defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::createProject }
+  methods: [ POST, OPTIONS ]
+
+column_create_v1:
+  path: /{org}/{project}/column/create
+  defaults: { _controller: App\Controller\ApiControllers\V1\ColumnController::createColumn }
+  methods: [ POST, OPTIONS ]
 
 issue_create_v1:
   path: /{org}/{project}/issue/create
   defaults: { _controller: App\Controller\ApiControllers\V1\IssueController::createIssue }
   methods: [ POST, OPTIONS ]
-
 
 # PUT ROUTES
 
@@ -35,3 +49,11 @@ issue_update_v1:
   path: /{org}/{project}/issue/update
   defaults: { _controller: App\Controller\ApiControllers\V1\IssueController::updateIssue }
   methods: [ PUT, OPTIONS ]
+
+
+# DELETE ROUTES
+
+issue_delete_v1:
+  path: /{org}/{project}/issue/delete
+  defaults: { _controller: App\Controller\ApiControllers\V1\IssueController::deleteIssue }
+  methods: [ DELETE, OPTIONS ]

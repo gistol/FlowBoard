@@ -18,6 +18,7 @@ use App\Responses\ApiResponses;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class ProjectController extends Controller implements ApiAuthenticationInterface
@@ -63,6 +64,60 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
         foreach ($projUsers as $user) $users[] = $user->getUser();
 
         return ApiResponses::okResponse($users);
+
+    }
+
+    public function createProject(
+        ValidatorInterface $validator,
+        SerializerInterface $serializer,
+        Request $request
+    ) {
+
+        /** @var Project $project */
+        $project = $serializer->deserialize(
+            $request->getContent(), Project::class, 'json'
+        );
+
+        $errors = $validator->validate($project);
+
+        // Check if there are any error's in the issue
+        if (count($errors) > 0) return ApiResponses::badRequest($errors[0]->getPropertyPath(), $errors[0]->getMessage());
+
+        $projectName = $this->getDoctrine()->getRepository(Project::class)->findOneBy([
+            'name' => $project->getName()
+        ]);
+
+        if ($projectName !== null) return ApiResponses::badRequest('name', 'Project name taken');
+
+        $key = strtoupper(substr($project->getName(), 0, 2));
+
+        $keyFound = null;
+
+        for ($i = 0; $i < 3; $i++) {
+
+            /** @var Project $keyFound */
+            $keyFound = $this->getDoctrine()->getRepository(Project::class)->findOneBy([
+                'key' => $key
+            ]);
+
+            if ($keyFound === null) break;
+
+            $key = $key . (intval(substr($keyFound->getKey(), -2)) + 1);
+
+        }
+
+        if ($keyFound !== null) return ApiResponses::badRequest('name', 'Choose a different project name');
+
+        $project->setKey($key);
+        $project->setOrganisation($this->get('organisation'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($project);
+
+        $em->flush();
+
+        return ApiResponses::okResponse($project);
 
     }
 

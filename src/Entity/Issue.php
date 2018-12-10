@@ -26,6 +26,10 @@ class Issue implements \JsonSerializable
     private $id;
 
     /**
+     * @Assert\NotBlank(
+     *     groups={"update"},
+     *     message="projectId can not be blank"
+     * )
      * @ORM\Column(type="integer")
      */
     private $projectId;
@@ -38,9 +42,11 @@ class Issue implements \JsonSerializable
 
     /**
      * @Assert\NotBlank(
+     *     groups={"create", "update"},
      *     message="Title can not be blank"
      * )
      * @Assert\Length(
+     *      groups={"create", "update"},
      *      min = 2,
      *      max = 100,
      *      minMessage = "Your issue title must be at least {{ limit }} characters long",
@@ -52,6 +58,7 @@ class Issue implements \JsonSerializable
 
     /**
      * @Assert\Length(
+     *      groups={"create", "update"},
      *      max = 100,
      *      maxMessage = "Your issue comment cannot be longer than {{ limit }} characters"
      * )
@@ -79,6 +86,7 @@ class Issue implements \JsonSerializable
 
     /**
      * @Assert\NotBlank(
+     *     groups={"create", "update"},
      *     message="status can not be blank"
      * )
      * @ORM\ManyToOne(targetEntity="App\Entity\IssueType", inversedBy="issues")

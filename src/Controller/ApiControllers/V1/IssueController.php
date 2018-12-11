@@ -210,15 +210,11 @@ class IssueController extends Controller implements ApiAuthenticationInterface
 
     }
 
-    public function deleteIssue(Request $request) {
-
-        $data = json_decode($request->getContent(), true);
-
-        if (!isset($data['projectId'])) return ApiResponses::badRequest('projectId', 'issue not found');
+    public function deleteIssue(Request $request, $projectId) {
 
         /** @var Issue $issue */
         $issue = $this->getDoctrine()->getRepository(Issue::class)->findOneBy([
-            'projectId' => intval($data['projectId']),
+            'projectId' => intval($projectId),
             'project' => $this->get('project')
         ]);
 

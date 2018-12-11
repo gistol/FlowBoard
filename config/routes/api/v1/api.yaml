@@ -54,6 +54,6 @@ issue_update_v1:
 # DELETE ROUTES
 
 issue_delete_v1:
-  path: /{org}/{project}/issue/delete
+  path: /{org}/{project}/{projectId}/issue/delete
   defaults: { _controller: App\Controller\ApiControllers\V1\IssueController::deleteIssue }
   methods: [ DELETE, OPTIONS ]

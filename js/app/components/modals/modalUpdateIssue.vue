@@ -89,7 +89,7 @@
         </div>
 
         <button
-          @click="createIssue($event)"
+          @click="updateIssue($event)"
         >
           Update issue
         </button>
@@ -165,7 +165,7 @@
         },
         methods: {
 
-            createIssue (e) {
+            updateIssue (e) {
                 e.preventDefault();
 
                 this.error = null;
@@ -183,7 +183,7 @@
                         this.close();
                     }).catch((res) => {
                         this.loading = false;
-                        if (res.status === 400) {
+                        if (res.response.status === 400) {
                             this.error = res.response.data.data.message;
                         } else {
                             this.error = 'Unknown error'

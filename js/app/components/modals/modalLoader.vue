@@ -24,6 +24,12 @@
       :update="updateFunc"
       :close="close"
     />
+    <modal-create-project
+      v-if="show.modalCreateProject"
+      :payload="payload"
+      :update="updateFunc"
+      :close="close"
+    />
   </div>
 </template>
 
@@ -35,10 +41,12 @@
     import ModalShowIssue from "./modalShowIssue.vue";
     import ModalCreateColumn from "./modalCreateColumn.vue";
     import ModalUpdateIssue from "./modalUpdateIssue.vue";
+    import ModalCreateProject from "./modalCreateProject.vue";
 
     export default {
         name: 'ModalLoader',
         components: {
+            ModalCreateProject,
             ModalUpdateIssue,
             ModalCreateColumn,
             ModalShowIssue,
@@ -47,6 +55,7 @@
         data() {
             return {
                 show: {
+                    modalCreateProject: false,
                     modalCreateColumn: false,
                     modalCreateIssue: false,
                     modalUpdateIssue: false,

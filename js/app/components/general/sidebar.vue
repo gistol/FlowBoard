@@ -42,6 +42,37 @@
           <ul>
 
             <li
+              v-if="projects === false"
+            >
+
+              <a
+                href="#"
+              >
+
+                <i class="fas fa-spinner fa-spin" />
+
+                Loading projects
+
+              </a>
+
+            </li>
+
+            <li
+              v-else
+              @click="createProject($event)"
+            >
+              <a
+                href="#"
+              >
+
+                <i class="fas fa-plus-circle" />
+
+                Create project
+
+              </a>
+            </li>
+
+            <li
               v-for="(value, key) in projects"
               :key="key"
               @click="goToProject($event, value)"
@@ -60,22 +91,6 @@
 
             </li>
 
-            <li
-              v-if="projects === false"
-            >
-
-              <a
-                href="#"
-              >
-
-                <i class="fas fa-spinner fa-spin" />
-
-                Loading projects
-
-              </a>
-
-            </li>
-
           </ul>
 
         </div>
@@ -86,6 +101,8 @@
 
 <script>
 
+    import Eventbus from '../../event/Eventbus';
+    import events from '../../consts/eventConsts';
     import mutations from '../../consts/mutationConsts';
 
     export default {
@@ -151,6 +168,19 @@
                     },
                     name: 'project'
                 })
+
+            },
+            createProject (e) {
+
+                e.preventDefault();
+
+                Eventbus.$emit(events.MODAL_REQUEST, {
+                    modal: 'modalCreateProject',
+                    payload: {},
+                    callBack() {
+                        this.$store.dispatch(mutations.GET_PROJECTS);
+                    }
+                });
 
             }
 

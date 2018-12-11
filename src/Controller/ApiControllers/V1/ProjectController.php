@@ -91,22 +91,29 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
 
         $key = strtoupper(substr($project->getName(), 0, 2));
 
-        $keyFound = null;
+        $keySet = false;
 
         for ($i = 0; $i < 3; $i++) {
 
-            /** @var Project $keyFound */
-            $keyFound = $this->getDoctrine()->getRepository(Project::class)->findOneBy([
-                'key' => $key
-            ]);
+            $keyFound = $this->getDoctrine()->getRepository(Project::class)->findHighestKey(
+                $key, $this->get('organisation')
+            );
 
-            if ($keyFound === null) break;
+            if (count($keyFound) === 0) break;
 
-            $key = $key . (intval(substr($keyFound->getKey(), -2)) + 1);
+            $keyIncrement = intval(substr($keyFound[0]->getKey(), -2));
+            $keyIncrement++;
+
+            if ($keyIncrement < 100) {
+                $keySet = true;
+                $key = $key . $keyIncrement;
+            }
+
+
 
         }
 
-        if ($keyFound !== null) return ApiResponses::badRequest('name', 'Choose a different project name');
+        if ($keySet === false) return ApiResponses::badRequest('name', 'Choose a different project name');
 
         $project->setKey($key);
         $project->setOrganisation($this->get('organisation'));

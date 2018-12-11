@@ -179,9 +179,8 @@
                         this.update(res.data.data);
                         this.close();
                     }).catch((res) => {
-                        console.log(res);
                         this.loading = false;
-                        if (res.status === 400) {
+                        if (res.response.status === 400) {
                             this.error = res.response.data.data.message;
                         } else {
                             this.error = 'Unknown error'

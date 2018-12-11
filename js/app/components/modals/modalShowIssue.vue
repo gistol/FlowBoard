@@ -94,13 +94,22 @@
         Update issue
       </button>
 
+      <button
+        @click="deleteIssue($event)"
+      >
+        Delete issue
+      </button>
+
     </div>
 
   </modal>
 
 </template>
+
 <script>
+    import api from '../../store/axios';
     import Modal from "../ui/modal.vue";
+    import mutations from '../../consts/mutationConsts';
     import Eventbus from '../../event/Eventbus';
     import events from '../../consts/eventConsts';
 
@@ -140,12 +149,36 @@
                     }
                 })
 
+            },
+
+            deleteIssue(e) {
+
+                e.preventDefault();
+
+                api(this.$store.state.token)
+                    .delete('/' + this.$store.state.org + '/' + this.payload.project + '/' + this.payload.projectId + '/issue/delete',
+                        this.payload
+                    )
+                    .then(() => {
+                        this.showDeleteSuccess();
+                        this.$store.commit(mutations.SAVE_PROJECT, false);
+                        this.$store.dispatch(mutations.GET_PROJECT, this.payload.project);
+                        this.close();
+                    }).catch((res) => {}
+                );
+
             }
 
+        },
+        notifications: {
+            showDeleteSuccess: {
+                title: 'Issue deleted',
+                message: 'You\'re issue is deleted',
+                type: 'success'
+            }
         }
     }
 </script>
-
 <style lang="scss">
 
   .issue-content {

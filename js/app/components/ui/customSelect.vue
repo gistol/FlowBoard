@@ -7,8 +7,9 @@
       @click="openSelect"
     >
       <img
+        v-if="showImg"
         :src="'/img/issue/type-' + value + '.png'"
-        :alt="'type-' + value"
+        :alt="value"
       >
       {{ value }}
     </a>
@@ -19,14 +20,14 @@
       <li
         v-for="(option, index) in options"
         :value="option.value"
-        :selected="option.value === value"
         :key="index"
         @click="select($event, option.value)"
       >
         <a href="#">
           <img
-            :src="'/img/issue/type-' + option.value + '.png'"
-            :alt="'type-' + option.value"
+            v-if="showImg"
+            :src="option.img"
+            :alt="option.value"
           >
           {{ option.value }}
         </a>
@@ -49,8 +50,12 @@
               }
           },
           value: {
-              type: String,
+              type: [String, Number],
               default: ""
+          },
+          showImg: {
+              type: Boolean,
+              default: false
           }
       },
       data () {
@@ -95,6 +100,7 @@
     width: 100%;
     float: right;
     cursor: pointer;
+    margin-bottom: 25px;
 
     .selected {
 
@@ -102,6 +108,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      border-bottom: 2px solid #036FE8;
 
     }
 
@@ -127,14 +134,13 @@
     ul {
 
       position: absolute;
-      top: 29px;
+      top: 30px;
       padding: 0;
       left: 0;
       background: #F5F9FB;
-      border-top: 2px solid #036FE8;
       list-style: none;
       width: 100%;
-      height: 90px;
+      height: 88px;
       overflow-y: scroll;
 
       li {

@@ -6,7 +6,7 @@
 
     <div slot="header">
 
-      <p>Create column</p>
+      <h3>Create column</h3>
 
     </div>
 
@@ -14,7 +14,10 @@
 
       <div class="issue-content" v-if="!loading">
 
-        <p v-if="error !== null">
+        <p
+          v-if="error !== null"
+          class="error-box"
+        >
           {{ error }}
         </p>
 
@@ -41,9 +44,12 @@
           </div>
 
           <div class="field-value">
-            <select v-model="project.order">
-              <option v-for="val in order">{{val}}</option>
-            </select>
+            <custom-select
+                v-model="project.order"
+                :options="order"
+                :show-img="false"
+                class="dropdown-less-height"
+            />
           </div>
 
         </div>
@@ -56,8 +62,15 @@
 
       </div>
 
-      <div v-else>
-        <p>Loading ....</p>
+      <div
+        v-else
+        class="loading"
+      >
+        <p class="loading-text">
+
+          <i class="fas fa-spinner fa-spin" /> Loading...
+
+        </p>
       </div>
 
     </div>
@@ -68,9 +81,11 @@
 <script>
     import api from '../../store/axios';
     import Modal from "../ui/modal.vue";
+    import CustomSelect from "../ui/customSelect.vue";
 
     export default {
         components: {
+            CustomSelect,
             Modal
         },
         props: {
@@ -99,14 +114,18 @@
 
             for (i = 0; i < columns.length; i++) {
 
-                this.order.push(i + 1);
+                this.order.push({
+                    value: i + 1
+                });
 
             }
 
         },
         data () {
             return {
-                order: [0],
+                order: [{
+                    value: 0
+                }],
                 loading: false,
                 error: null,
                 project: {
@@ -157,3 +176,20 @@
         }
     }
 </script>
+
+<style lang="scss">
+
+  .dropdown-less-height {
+
+    height: 32px!important;
+
+    ul {
+
+      top: 15px!important;
+      height: 59px!important;
+
+    }
+
+  }
+
+</style>

@@ -76,7 +76,14 @@
 
       .modal-header {
 
+        position: absolute;
+        height: 80px;
+        width: 100%;
         padding: 25px;
+        z-index: 1;
+        -webkit-box-shadow: 0 20px 12px 0 rgba(255, 255, 255, 0.75);
+        -moz-box-shadow: 0 20px 12px 0 rgba(255, 255, 255, 0.75);
+        box-shadow: 0 20px 12px 0 rgba(255, 255, 255, 0.75);
 
         .close {
 

@@ -59,7 +59,7 @@ class Issue implements \JsonSerializable
     /**
      * @Assert\Length(
      *      groups={"create", "update"},
-     *      max = 100,
+     *      max = 1000,
      *      maxMessage = "Your issue comment cannot be longer than {{ limit }} characters"
      * )
      * @ORM\Column(type="text", length=1000, nullable=true)

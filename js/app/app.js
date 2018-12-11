@@ -20,6 +20,9 @@ import routes from './routes';
 
 import mutations from './consts/mutationConsts';
 
+import VueMoment from 'vue-moment';
+import moment from 'moment-timezone';
+
 //eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production') {
     Vue.config.devtools = false;
@@ -28,6 +31,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 //eslint-disable-next-line no-undef
 Vue.config.performance = process.env.NODE_ENV !== 'production';
+
+Vue.use(VueMoment, {
+    moment
+});
 
 // We shall setup types of the messages. ('error' type - red and 'success' - green in mini-toastr)
 const toastTypes = {

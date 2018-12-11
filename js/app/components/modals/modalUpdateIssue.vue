@@ -6,7 +6,7 @@
 
     <div slot="header">
 
-      <p>Update issue</p>
+      <h3>Update issue</h3>
 
     </div>
 
@@ -14,7 +14,10 @@
 
       <div class="issue-content" v-if="!loading">
 
-        <p v-if="error !== null">
+        <p
+          v-if="error !== null"
+          class="error-box"
+        >
           {{ error }}
         </p>
 
@@ -40,11 +43,11 @@
           </div>
 
           <div class="field-value">
-            <select v-model="issue.status">
-              <option>task</option>
-              <option>bug</option>
-              <option>epic</option>
-            </select>
+            <custom-select
+              v-model="issue.status"
+              :options="options"
+              :show-img="true"
+            />
           </div>
 
         </div>
@@ -71,16 +74,12 @@
           </div>
 
           <div class="field-value">
-            <select v-model="issue.assigned" v-if="projectUsers !== false">
-              <option value="">None</option>
-              <option
-                v-for="(value, key) in projectUsers"
-                :key="key"
-                :value="value.email"
-              >
-                {{ value.firstName }} {{ value.lastName }}
-              </option>
-            </select>
+            <custom-user-select
+              v-if="projectUsers !== false"
+              v-model="issue.assigned"
+              :options="projectUsers"
+              :show-img="true"
+            />
             <p v-else>
               Loading users...
             </p>
@@ -96,8 +95,17 @@
 
       </div>
 
-      <div v-else>
-        <p>Loading ....</p>
+      <div
+        v-else
+        class="loading"
+      >
+
+        <p class="loading-text">
+
+          <i class="fas fa-spinner fa-spin" /> Loading...
+
+        </p>
+
       </div>
 
     </div>
@@ -106,13 +114,18 @@
 
 </template>
 <script>
+    import Vue from 'vue/dist/vue';
     import api from '../../store/axios';
     import Modal from "../ui/modal.vue";
+    import CustomSelect from "../ui/customSelect.vue";
+    import CustomUserSelect from "../ui/customUserSelect.vue";
     import mutations from '../../consts/mutationConsts';
 
     export default {
         components: {
-            Modal
+            Modal,
+            CustomSelect,
+            CustomUserSelect
         },
         props: {
             update: {
@@ -137,7 +150,8 @@
             this.issue = JSON.parse(JSON.stringify(this.payload));
 
             this.issue.status = this.issue.status.name;
-            this.issue.assigned = (this.issue.assignee === null ? "" : this.issue.assignee.email);
+
+            Vue.set(this.issue, 'assigned', (this.issue.assignee === null ? "" : this.issue.assignee.email));
 
             if (this.projectUsers === false) {
                 this.$store.dispatch(mutations.GET_PROJECT_USERS, this.payload.project);
@@ -155,11 +169,25 @@
             return {
                 loading: false,
                 error: null,
+                options: [
+                    {
+                        value: 'task',
+                        img: '/img/issue/type-task.png'
+                    },
+                    {
+                        value: 'bug',
+                        img: '/img/issue/type-bug.png'
+                    },
+                    {
+                        value: 'epic',
+                        img: '/img/issue/type-epic.png'
+                    }
+                ],
                 issue: {
                     status: 'task',
                     title: '',
                     comment: null,
-                    assigned: ''
+                    assigned: null
                 }
             }
         },
@@ -170,6 +198,8 @@
 
                 this.error = null;
                 this.loading = true;
+
+                if (this.issue.assigned === "") this.issue.assigned = null;
 
                 api(this.$store.state.token)
                     .put('/' + this.$store.state.org + '/' + this.payload.project + '/issue/update',

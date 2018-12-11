@@ -14,7 +14,10 @@
 
       <div class="issue-content" v-if="!loading">
 
-        <p v-if="error !== null">
+        <p
+          v-if="error !== null"
+          class="error-box"
+        >
           {{ error }}
         </p>
 
@@ -41,10 +44,10 @@
           </div>
 
           <div class="field-value">
-
             <custom-select
               v-model="issue.status"
               :options="options"
+              :show-img="true"
             />
           </div>
 
@@ -72,16 +75,12 @@
           </div>
 
           <div class="field-value">
-            <select v-model="issue.assigned" v-if="projectUsers !== false">
-              <option value="">None</option>
-              <option
-                v-for="(value, key) in projectUsers"
-                :key="key"
-                :value="value.email"
-              >
-                {{ value.firstName }} {{ value.lastName }}
-              </option>
-            </select>
+            <custom-user-select
+              v-if="projectUsers !== false"
+              v-model="issue.assigned"
+              :options="projectUsers"
+              :show-img="true"
+            />
             <p v-else>
               Loading users...
             </p>
@@ -118,9 +117,11 @@
     import Modal from "../ui/modal.vue";
     import mutations from '../../consts/mutationConsts';
     import CustomSelect from "../ui/customSelect.vue";
+    import CustomUserSelect from "../ui/customUserSelect.vue";
 
     export default {
         components: {
+            CustomUserSelect,
             CustomSelect,
             Modal
         },
@@ -168,13 +169,16 @@
                 },
                 options: [
                     {
-                        value: 'task'
+                        value: 'task',
+                        img: '/img/issue/type-task.png'
                     },
                     {
-                        value: 'bug'
+                        value: 'bug',
+                        img: '/img/issue/type-bug.png'
                     },
                     {
-                        value: 'epic'
+                        value: 'epic',
+                        img: '/img/issue/type-epic.png'
                     }
                 ]
             }

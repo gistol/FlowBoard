@@ -11,6 +11,7 @@ namespace App\Controller\DashboardControllers;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DashboardController extends Controller
 {
@@ -33,6 +34,20 @@ class DashboardController extends Controller
 
         return $this->render('dashboard/dashboard.twig', [
             'token' => $session->get('token')
+        ]);
+
+    }
+
+    public function renderImgUser($email) {
+
+
+        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) );
+
+
+        $content = file_get_contents($grav_url);
+
+        return new Response($content, Response::HTTP_OK, [
+            'content-type' => 'image/png'
         ]);
 
     }

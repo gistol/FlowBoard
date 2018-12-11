@@ -30,24 +30,58 @@ button {
   cursor: pointer;
   font-size: 16px;
   border-radius: 4px;
+  margin-bottom: 5px;
   background-color: #036EE9; }
 
-.field-set {
+.delete-button {
+  background-color: #e74c3c; }
+
+.field-show {
   padding: 10px 0; }
 
-.field-set .field-title p {
+.field-title p {
   color: #2c2c2c;
   font-size: 14px;
   font-weight: 500; }
+
+.field-show .field-value {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  font-weight: 400;
+  background-color: #f5f9fb;
+  padding: 5px;
+  border-bottom: 2px solid #036EE9;
+  font-size: 18px;
+  display: flex;
+  align-items: center; }
+  .field-show .field-value img {
+    width: 20px;
+    margin: 7px; }
+
+.field-set {
+  padding: 10px 0; }
 
 .field-set .field-value input {
   outline: 0;
   width: 100%;
   border: 0;
   font-weight: 500;
-  padding-bottom: 5px;
+  background-color: #f5f9fb;
+  padding: 5px;
   border-bottom: 2px solid #036EE9;
   font-size: 18px; }
+
+.field-set .field-value textarea {
+  font-size: 14px;
+  outline: 0;
+  font-weight: 500;
+  background-color: #f5f9fb;
+  border: 0;
+  width: 100%;
+  height: 75px;
+  padding: 10px;
+  resize: none; }
 
 .error-box {
   margin: 25px 0 0 0;

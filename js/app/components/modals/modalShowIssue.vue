@@ -16,7 +16,7 @@
 
 
 
-        <div class="field-set">
+        <div class="field-show">
 
           <div class="field-title">
             <p>Type</p>
@@ -25,12 +25,13 @@
           <div class="field-value">
             <img
               :src="'/img/issue/type-' + payload.status.name + '.png'"
+              :alt="payload.status.name"
             > {{ payload.status.name }}
           </div>
 
         </div>
 
-        <div class="field-set">
+        <div class="field-show">
 
           <div class="field-title">
             <p>Summary</p>
@@ -42,7 +43,7 @@
 
         </div>
 
-        <div class="field-set">
+        <div class="field-show">
 
           <div class="field-title">
             <p>Assignee</p>
@@ -53,13 +54,13 @@
             {{ payload.assignee.firstName }} {{ payload.assignee.lastName }}
           </span>
             <span v-else>
-            change to a person
+            Not assigned
           </span>
           </div>
 
         </div>
 
-        <div class="field-set">
+        <div class="field-show">
 
           <div class="field-title">
             <p>Reporter</p>
@@ -71,22 +72,22 @@
 
         </div>
 
-        <div class="field-set">
+        <div class="field-show">
 
           <div class="field-title">
             <p>Created</p>
           </div>
 
-          <div class="field-value">
-            {{ payload.created.date }}
+          <div
+            class="field-value"
+            style="margin-bottom: 20px;"
+          >
+            {{ payload.created.date | moment("HH:mm D MMMM YYYY") }}
           </div>
 
         </div>
 
       </div>
-
-      <span>{{ payload.key }}</span>
-
 
       <button
         @click="updateIssue($event)"
@@ -96,6 +97,7 @@
 
       <button
         @click="deleteIssue($event)"
+        class="delete-button"
       >
         Delete issue
       </button>

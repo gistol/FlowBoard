@@ -76,7 +76,7 @@
       }
 
 
-    border-radius: 5px;
+      border-radius: 5px;
 
       padding: 10px;
       cursor: pointer;
@@ -108,24 +108,17 @@
 
           .issue-description {
 
-              font-size: 18px;
               overflow-wrap: break-word;
               word-wrap: break-word;
 
               span {
 
-                  font-size: 16px;
-                  font-weight: 400;
+                  font-size: 14px;
+                  font-weight: 100;
 
               }
 
               font-weight: 500;
-
-          }
-
-          .issue-assignee {
-
-              font-size: 14px;
 
           }
 

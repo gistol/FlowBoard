@@ -6,7 +6,7 @@
 
     <div slot="header">
 
-      <p>Create issue</p>
+      <h3>Create issue</h3>
 
     </div>
 
@@ -33,6 +33,7 @@
 
         </div>
 
+
         <div class="field-set">
 
           <div class="field-title">
@@ -40,11 +41,11 @@
           </div>
 
           <div class="field-value">
-            <select v-model="issue.status">
-              <option>task</option>
-              <option>bug</option>
-              <option>epic</option>
-            </select>
+
+            <custom-select
+              v-model="issue.status"
+              :options="options"
+            />
           </div>
 
         </div>
@@ -96,8 +97,15 @@
 
       </div>
 
-      <div v-else>
-        <p>Loading ....</p>
+      <div
+        v-else
+        class="loading"
+      >
+        <p class="loading-text">
+
+          <i class="fas fa-spinner fa-spin" /> Loading...
+
+        </p>
       </div>
 
     </div>
@@ -109,9 +117,11 @@
     import api from '../../store/axios';
     import Modal from "../ui/modal.vue";
     import mutations from '../../consts/mutationConsts';
+    import CustomSelect from "../ui/customSelect.vue";
 
     export default {
         components: {
+            CustomSelect,
             Modal
         },
         props: {
@@ -155,7 +165,18 @@
                   title: '',
                   comment: null,
                   assigned: ''
-                }
+                },
+                options: [
+                    {
+                        value: 'task'
+                    },
+                    {
+                        value: 'bug'
+                    },
+                    {
+                        value: 'epic'
+                    }
+                ]
             }
         },
         methods: {

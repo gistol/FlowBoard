@@ -8,6 +8,62 @@ html {
   font-weight: 400;
   font-family: 'Roboto', sans-serif; }
 
+h1 {
+  font-size: 36px; }
+
+h2 {
+  font-size: 32px; }
+
+h3 {
+  font-size: 28px; }
+
+h4 {
+  font-size: 24px; }
+
+p {
+  font-size: 16px; }
+
+button {
+  border: 0;
+  padding: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #036EE9; }
+
+.field-set {
+  padding: 10px 0; }
+
+.field-set .field-title p {
+  color: #2c2c2c;
+  font-size: 14px;
+  font-weight: 500; }
+
+.field-set .field-value input {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  font-weight: 500;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #036EE9;
+  font-size: 18px; }
+
+.error-box {
+  margin: 25px 0 0 0;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 10px;
+  font-size: 14px; }
+
+.modal-body .loading {
+  display: flex;
+  width: 100%;
+  height: 250px; }
+  .modal-body .loading .loading-text {
+    margin: auto; }
+
 body,
 html {
   background-color: #1C2158; }

@@ -164,8 +164,7 @@
                         this.$store.commit(mutations.SAVE_PROJECT, false);
                         this.$store.dispatch(mutations.GET_PROJECT, this.payload.project);
                         this.close();
-                    }).catch((res) => {}
-                );
+                    }).catch((res) => {});
 
             }
 
@@ -184,42 +183,6 @@
   .issue-content {
 
     position: relative;
-
-    .field-set {
-
-      display: flex;
-
-      .field-title {
-
-        text-align: right;
-        margin-right: 10px;
-        flex-basis: 0;
-        flex-grow: 2;
-
-        p {
-
-          margin: 0;
-          padding: 0;
-
-        }
-
-
-      }
-
-      .field-value {
-
-        flex-basis: 0;
-        flex-grow: 3;
-
-        img {
-
-          width: 20px;
-
-        }
-
-      }
-
-    }
 
   }
 

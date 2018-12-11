@@ -99,7 +99,10 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
                 $key, $this->get('organisation')
             );
 
-            if (count($keyFound) === 0) break;
+            if (count($keyFound) === 0) {
+                $keySet = true;
+                break;
+            }
 
             $keyIncrement = intval(substr($keyFound[0]->getKey(), -2));
             $keyIncrement++;
@@ -108,8 +111,6 @@ class ProjectController extends Controller implements ApiAuthenticationInterface
                 $keySet = true;
                 $key = $key . $keyIncrement;
             }
-
-
 
         }
 

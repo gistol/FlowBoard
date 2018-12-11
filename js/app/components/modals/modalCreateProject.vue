@@ -6,7 +6,7 @@
 
     <div slot="header">
 
-      <p>Create Project</p>
+      <h3>Create Project</h3>
 
     </div>
 
@@ -14,20 +14,23 @@
 
       <div class="issue-content" v-if="!loading">
 
-        <p v-if="error !== null">
+        <p
+          v-if="error !== null"
+          class="error-box"
+        >
           {{ error }}
         </p>
 
         <div class="field-set">
 
           <div class="field-title">
-            <p>Name</p>
+            <p>Project name</p>
           </div>
 
           <div class="field-value">
             <input
               v-model="project.name"
-              placeholder="Name"
+              placeholder="Project name"
             />
           </div>
 
@@ -41,8 +44,15 @@
 
       </div>
 
-      <div v-else>
-        <p>Loading ....</p>
+      <div
+        v-else
+        class="loading"
+      >
+        <p class="loading-text">
+
+          <i class="fas fa-spinner fa-spin" /> Loading...
+
+        </p>
       </div>
 
     </div>
@@ -76,20 +86,6 @@
                     return 0;
                 }
             }
-        },
-        created () {
-
-            if (this.projectUsers === false) {
-                this.$store.dispatch(mutations.GET_PROJECT_USERS, this.payload.project);
-            }
-
-        },
-        computed: {
-
-            projectUsers() {
-                return this.$store.getters.getProjectUsers;
-            }
-
         },
         data () {
             return {

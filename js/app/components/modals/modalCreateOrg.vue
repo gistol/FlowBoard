@@ -111,9 +111,9 @@
                     .then((res) => {
                         this.loading = false;
                         this.showOrgSuccess();
-                        this.close();
-                        localStorage.setItem('selected-org', org);
+                        localStorage.setItem('selected-org', res.data.data.name);
                         this.$store.commit(mutations.SET_ORGANISATION, res.data.data.name);
+                        this.close();
                     }).catch((res) => {
                         this.loading = false;
                         if (res.response.status === 400) {

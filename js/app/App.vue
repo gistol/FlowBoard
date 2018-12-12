@@ -13,7 +13,7 @@
             alt="logo-light"
           >
 
-          <p>Select a project to continue</p>
+          <p>Select a organisation to continue</p>
 
           <div class="organisations-container">
 

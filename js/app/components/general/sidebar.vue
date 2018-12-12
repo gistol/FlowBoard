@@ -108,6 +108,8 @@
         src="img/logo-light.svg"
       >
 
+      <i class="fas fa-bars"></i>
+
     </div>
 
     <div

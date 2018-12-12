@@ -148,6 +148,11 @@ button {
   .sidebar-mobile img {
     max-width: 150px;
     margin: 14px; }
+  .sidebar-mobile i {
+    color: #ffffff;
+    float: right;
+    font-size: 30px;
+    margin: 15px; }
 
 .sidebar-mobile-content {
   background-color: #1C2158;

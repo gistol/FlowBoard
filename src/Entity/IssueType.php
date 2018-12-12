@@ -35,7 +35,7 @@ class IssueType implements \JsonSerializable
     private $name;
 
     /**
-     * @ORM\Column(type="smallint", length=1)
+     * @ORM\Column(type="boolean", length=1)
      */
     private $containsSub;
 

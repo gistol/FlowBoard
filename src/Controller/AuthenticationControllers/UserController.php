@@ -11,7 +11,6 @@ namespace App\Controller\AuthenticationControllers;
 
 use App\Entity\OrganisationUsers;
 use App\Entity\UserInvitations;
-use App\Responses\ApiResponses;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserController extends Controller
@@ -49,14 +48,9 @@ class UserController extends Controller
 
         $em->flush();
 
-
-
         $this->addFlash('1', "login to join $pName");
 
         return $this->redirectToRoute('login');
-
-
-
     }
 
 }

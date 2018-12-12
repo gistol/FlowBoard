@@ -31,7 +31,7 @@ class Project implements \JsonSerializable
     private $key;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectUsers", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectUsers", mappedBy="project")
      */
     private $users;
 

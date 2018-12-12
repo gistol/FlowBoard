@@ -39,7 +39,6 @@ class TokenGeneratorUtil
         $em->flush();
 
 
-        //TODO: beter token creation and splitting up and checking for active token
         return $token->getToken();
 
     }

@@ -5,6 +5,7 @@
  */
 body,
 html {
+  margin: 0;
   font-weight: 400;
   font-family: 'Roboto', sans-serif; }
 
@@ -137,5 +138,49 @@ button {
       .sidebar ul li:hover {
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.1) !important; }
+
+.sidebar-mobile {
+  display: none;
+  background-color: #1C2158;
+  height: 60px;
+  margin: 0;
+  padding: 0; }
+  .sidebar-mobile img {
+    max-width: 150px;
+    margin: 14px; }
+
+.sidebar-mobile-content {
+  background-color: #1C2158;
+  padding: 5px;
+  color: #ffffff; }
+  .sidebar-mobile-content ul {
+    padding: 0;
+    margin: 0; }
+    .sidebar-mobile-content ul li {
+      list-style-type: none;
+      background-color: #036FE8;
+      border-radius: 4px;
+      padding: 5px;
+      margin: 5px 0; }
+      .sidebar-mobile-content ul li a {
+        text-decoration: none;
+        color: #ffffff; }
+        .sidebar-mobile-content ul li a i {
+          display: none; }
+
+@media screen and (max-width: 800px) {
+  .bootstrap-wrapper {
+    padding: 5px;
+    margin: 0 !important;
+    width: 100% !important; }
+
+  .sidebar {
+    display: none; }
+
+  .sidebar-mobile {
+    display: block; }
+
+  .modal .modal-content {
+    width: 345px !important; } }
 
 /*# sourceMappingURL=dashboard.css.map */

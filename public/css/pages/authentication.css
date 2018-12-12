@@ -5,6 +5,7 @@
  */
 body,
 html {
+  margin: 0;
   font-weight: 400;
   font-family: 'Roboto', sans-serif; }
 
@@ -106,10 +107,20 @@ html {
   padding: 20px;
   border-radius: 5px;
   background-color: #ffffff; }
+  .authentication-container form {
+    margin-top: -15px; }
 
 .authentication-logo {
   display: block;
   margin: 75px auto;
   max-width: 300px; }
+
+.message-box {
+  margin: 25px 0 0 0;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #2ecc71;
+  padding: 10px;
+  font-size: 14px; }
 
 /*# sourceMappingURL=authentication.css.map */

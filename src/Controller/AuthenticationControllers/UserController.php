@@ -26,7 +26,11 @@ class UserController extends Controller
 
         if ($found === null) return $this->redirectToRoute('login');
 
+        $pName = $found->getOrg()->getName();
+
         if ($found->getUser() === null) {
+            $this->addFlash('1', "Register to join $pName");
+
             return $this->redirectToRoute('register', [
                 'hash' => $hash
             ]);
@@ -45,7 +49,7 @@ class UserController extends Controller
 
         $em->flush();
 
-        $pName = $access->getOrganisation()->getName();
+
 
         $this->addFlash('1', "login to join $pName");
 

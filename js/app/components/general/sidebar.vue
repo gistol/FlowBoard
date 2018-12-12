@@ -1,101 +1,211 @@
 <template>
 
+  <div>
     <div class="sidebar">
 
-        <img
-          class="sidebar-logo"
-          src="img/logo-light.svg"
-        >
+      <img
+        class="sidebar-logo"
+        src="img/logo-light.svg"
+      >
 
-        <div class="top-menu menu">
+      <div class="top-menu menu">
 
-            <p>DASHBOARD</p>
+        <p>DASHBOARD</p>
 
-            <ul>
+        <ul>
 
-                <li
-                  v-for="(value, key) in menu.top"
-                  :key="key"
-                  @click="goToScreen($event, value.link)"
-                >
+          <li
+            v-for="(value, key) in menu.top"
+            :key="key"
+            @click="goToScreen($event, value.link)"
+          >
 
-                    <a
-                      href="#"
-                    >
-
-                        <i :class="'fas ' + value.icon" />
-
-                        {{ value.name }}
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </div>
-
-        <div class="menu">
-
-          <p>BOARDS</p>
-
-          <ul>
-
-            <li
-              v-if="projects === false"
+            <a
+              href="#"
             >
 
-              <a
-                href="#"
-              >
+              <i :class="'fas ' + value.icon" />
 
-                <i class="fas fa-spinner fa-spin" />
+              {{ value.name }}
 
-                Loading projects
+            </a>
 
-              </a>
+          </li>
 
-            </li>
+        </ul>
 
-            <li
-              v-else
-              @click="createProject($event)"
-            >
-              <a
-                href="#"
-              >
+      </div>
 
-                <i class="fas fa-plus-circle" />
+      <div class="menu">
 
-                Create project
+        <p>BOARDS</p>
 
-              </a>
-            </li>
+        <ul>
 
-            <li
-              v-for="(value, key) in projects"
-              :key="key"
-              @click="goToProject($event, value)"
+          <li
+            v-if="projects === false"
+          >
+
+            <a
+              href="#"
             >
 
-              <a
-                href="/"
-                class="active"
-              >
+              <i class="fas fa-spinner fa-spin" />
 
-                <i class="fas fa-cube" />
+              Loading projects
 
-                {{ value.name }}
+            </a>
 
-              </a>
+          </li>
 
-            </li>
+          <li
+            v-else
+            @click="createProject($event)"
+          >
+            <a
+              href="#"
+            >
 
-          </ul>
+              <i class="fas fa-plus-circle" />
 
-        </div>
+              Create project
+
+            </a>
+          </li>
+
+          <li
+            v-for="(value, key) in projects"
+            :key="key"
+            @click="goToProject($event, value)"
+          >
+
+            <a
+              href="/"
+              class="active"
+            >
+
+              <i class="fas fa-cube" />
+
+              {{ value.name }}
+
+            </a>
+
+          </li>
+
+        </ul>
+
+      </div>
 
     </div>
+
+    <div
+      class="sidebar-mobile"
+      @click="showMenuBarMobile = !showMenuBarMobile"
+    >
+
+      <img
+        class="sidebar-logo"
+        src="img/logo-light.svg"
+      >
+
+    </div>
+
+    <div
+      v-if="showMenuBarMobile"
+      class="sidebar-mobile-content"
+    >
+
+      <div class="top-menu menu">
+
+        <p>DASHBOARD</p>
+
+        <ul>
+
+          <li
+            v-for="(value, key) in menu.top"
+            :key="key"
+            @click="goToScreen($event, value.link)"
+          >
+
+            <a
+              href="#"
+            >
+
+              <i :class="'fas ' + value.icon" />
+
+              {{ value.name }}
+
+            </a>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="menu">
+
+        <p>BOARDS</p>
+
+        <ul>
+
+          <li
+            v-if="projects === false"
+          >
+
+            <a
+              href="#"
+            >
+
+              <i class="fas fa-spinner fa-spin" />
+
+              Loading projects
+
+            </a>
+
+          </li>
+
+          <li
+            v-else
+            @click="createProject($event)"
+          >
+            <a
+              href="#"
+            >
+
+              <i class="fas fa-plus-circle" />
+
+              Create project
+
+            </a>
+          </li>
+
+          <li
+            v-for="(value, key) in projects"
+            :key="key"
+            @click="goToProject($event, value)"
+          >
+
+            <a
+              href="/"
+              class="active"
+            >
+
+              <i class="fas fa-cube" />
+
+              {{ value.name }}
+
+            </a>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+
 
 </template>
 
@@ -109,6 +219,7 @@
 
         data () {
             return {
+                showMenuBarMobile: false,
                 menu: {
                     top: [
                         {
@@ -152,6 +263,8 @@
 
                 e.preventDefault();
 
+                this.showMenuBarMobile = false;
+
                 this.$router.push({
                     name: screen
                 })
@@ -160,6 +273,8 @@
             goToProject (e, val) {
 
                 e.preventDefault();
+
+                this.showMenuBarMobile = false;
 
                 this.$router.push({
                     params: {
@@ -173,6 +288,8 @@
             createProject (e) {
 
                 e.preventDefault();
+
+                this.showMenuBarMobile = false;
 
                 Eventbus.$emit(events.MODAL_REQUEST, {
                     modal: 'modalCreateProject',
@@ -189,3 +306,16 @@
     }
 
 </script>
+
+<style>
+
+  @media screen and (max-width: 800px) {
+    .bootstrap-wrapper {
+
+      margin: 0;
+      width: 100%;
+
+    }
+  }
+
+</style>

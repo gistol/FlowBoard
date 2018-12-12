@@ -27,31 +27,55 @@
 
                     <h1>Login</h1>
 
+                    <p>You can register <a href="{{ path('register') }}">here</a></p>
+
                     {% for flashMessage in app.session.flashbag.get('1') %}
+                        <p class="message-box">
+                            {{ flashMessage | raw }}
+                        </p>
+                    {% endfor %}
 
-                        {{ flashMessage }}
-
+                    {% for flashMessage in app.session.flashbag.get('2') %}
+                        <p class="error-box">
+                            {{ flashMessage | raw }}
+                        </p>
                     {% endfor %}
 
                     <form action="{{ path("login") }}" method="post">
 
-                        <div id="fields" class="fields">
+                        {% if error is defined %} {{ error }} {% endif %} <br/>
 
-                            {% if error is defined %} {{ error }} {% endif %} <br/>
+                        <div class="field-set">
 
-                            {{ form_label(form.email, null, { 'label_attr': {'class': 'form-placeholder'} }) }}
-                            {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                            <div class="field-title">
+                                <p>{{ form_label(form.email, null, { 'label_attr': {'class': 'form-placeholder'} }) }}</p>
+                            </div>
 
-                            <div class="half">
-                                {{ form_label(form.password, null, { 'label_attr': {'class': 'form-placeholder'} }) }}
+                            <div class="field-value">
+                                {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+
+                        </div>
+
+                        <div class="field-set">
+
+                            <div class="field-title">
+                                <p>{{ form_label(form.password, null, { 'label_attr': {'class': 'form-placeholder'} }) }}</p>
+                            </div>
+
+                            <div class="field-value">
+
                                 {{ form_widget(form.password, { 'attr': {'class': 'form-control' } }) }}
                             </div>
 
-                            {{ form_rest(form) }}
-
-                            <input type="submit" class="btn btn-default button" id="_submit" name="_submit" value="Login">
-
                         </div>
+
+
+                        {{ form_rest(form) }}
+
+                        <button type="submit" class="btn btn-default button" id="_submit" name="_submit">
+                            Login
+                        </button>
 
                     </form>
 

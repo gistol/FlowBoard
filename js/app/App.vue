@@ -44,7 +44,6 @@
         <div
           v-if="selectedOrganisation !== null"
           class="bootstrap-wrapper"
-          style="width: calc(100% - 250px);margin-left: 250px;"
         >
           <router-view />
         </div>
@@ -120,6 +119,12 @@
 </script>
 
 <style lang="scss">
+
+  .bootstrap-wrapper {
+
+      width: calc(100% - 250px);margin-left: 250px;
+
+  }
 
   .onboarding {
 

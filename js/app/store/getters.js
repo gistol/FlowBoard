@@ -1,5 +1,17 @@
 export default {
 
+    getOrganisations (state) {
+
+        return state.organisations;
+
+    },
+
+    getSelectedOrganisation (state) {
+
+        return state.org;
+
+    },
+
     getProjects (state) {
 
         return state.projects;

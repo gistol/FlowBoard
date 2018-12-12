@@ -27,6 +27,12 @@
 
                     <h1>Login</h1>
 
+                    {% for flashMessage in app.session.flashbag.get('1') %}
+
+                        {{ flashMessage }}
+
+                    {% endfor %}
+
                     <form action="{{ path("login") }}" method="post">
 
                         <div id="fields" class="fields">

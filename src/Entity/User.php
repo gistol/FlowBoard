@@ -19,7 +19,7 @@ class User implements \JsonSerializable
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -30,7 +30,7 @@ class User implements \JsonSerializable
      * )
      * @Assert\Email()
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -40,7 +40,7 @@ class User implements \JsonSerializable
      *     max = 50
      * )
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -50,17 +50,17 @@ class User implements \JsonSerializable
      *     max = 50
      * )
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @ORM\Column(type="boolean", length=1)
      */
-    private $isEnabled = 0;
+    protected $isEnabled = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserToken", mappedBy="user", cascade={"remove"}, orphanRemoval=true)
@@ -70,22 +70,27 @@ class User implements \JsonSerializable
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\OrganisationUsers", mappedBy="users")
      */
-    private $organisations;
+    protected $organisations;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectUsers", mappedBy="users")
      */
-    private $projects;
+    protected $projects;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="assigned")
      */
-    private $assigndIssues;
+    protected $assigndIssues;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Issue", mappedBy="reporter")
      */
-    private $reportedIssues;
+    protected $reportedIssues;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInvitations", mappedBy="user", cascade={"remove"})
+     */
+    private $invitations;
 
     /**
      * @return mixed
@@ -189,6 +194,86 @@ class User implements \JsonSerializable
     public function setTokens($tokens): void
     {
         $this->tokens = $tokens;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganisations()
+    {
+        return $this->organisations;
+    }
+
+    /**
+     * @param mixed $organisations
+     */
+    public function setOrganisations($organisations): void
+    {
+        $this->organisations = $organisations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param mixed $projects
+     */
+    public function setProjects($projects): void
+    {
+        $this->projects = $projects;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssigndIssues()
+    {
+        return $this->assigndIssues;
+    }
+
+    /**
+     * @param mixed $assigndIssues
+     */
+    public function setAssigndIssues($assigndIssues): void
+    {
+        $this->assigndIssues = $assigndIssues;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReportedIssues()
+    {
+        return $this->reportedIssues;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInvitations()
+    {
+        return $this->invitations;
+    }
+
+    /**
+     * @param mixed $invitations
+     */
+    public function setInvitations($invitations): void
+    {
+        $this->invitations = $invitations;
+    }
+
+    /**
+     * @param mixed $reportedIssues
+     */
+    public function setReportedIssues($reportedIssues): void
+    {
+        $this->reportedIssues = $reportedIssues;
     }
 
     public function jsonSerialize()

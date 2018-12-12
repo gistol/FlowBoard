@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="organisation_users")
  */
-class OrganisationUsers
+class OrganisationUsers implements \JsonSerializable
 {
 
     /*
@@ -130,6 +130,11 @@ class OrganisationUsers
     public function setJoined($joined): void
     {
         $this->joined = $joined;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->organisation;
     }
 
 }

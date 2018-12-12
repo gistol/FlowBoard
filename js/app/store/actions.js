@@ -3,6 +3,18 @@ import mutations from '../consts/mutationConsts';
 
 export default {
 
+    [mutations.GET_ORGANISATIONS] (context) {
+
+        api(context.state.token).get('/organisations/get').then((res) => {
+
+            context.commit(mutations.SAVE_ORGANISATIONS, res.data.data);
+
+        }).catch((res) => {
+            console.log(res);
+        });
+
+    },
+
     [mutations.GET_PROJECTS] (context) {
 
         api(context.state.token).get('/' + context.state.org + '/projects').then((res) => {

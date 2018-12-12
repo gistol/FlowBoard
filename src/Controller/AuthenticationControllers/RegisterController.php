@@ -9,7 +9,9 @@
 namespace App\Controller\AuthenticationControllers;
 
 
+use App\Entity\OrganisationUsers;
 use App\Entity\User;
+use App\Entity\UserInvitations;
 use App\Form\Authentication\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,11 @@ class RegisterController extends Controller
 
     public function register(Request $request) {
 
+        $session = $this->get('session');
+
+        if ($request->get('hash') !== null) {
+            $session->set('hash', $request->get('hash'));
+        }
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -36,6 +43,36 @@ class RegisterController extends Controller
 
             $em->persist($user);
 
+            if ($session->get('hash') !== null) {
+                $hash = $session->get('hash');
+
+                /** @var UserInvitations $found */
+                $found = $this->getDoctrine()->getRepository(UserInvitations::class)->findOneBy([
+                    'link' => $hash
+                ]);
+
+                if ($found !== null) {
+
+                    $access = new OrganisationUsers();
+                    $access->setOrganisation($found->getOrg());
+                    $access->setUser($user);
+                    $access->setAccess($found->getAccess());
+
+                    $em->persist($access);
+                    $em->remove($found);
+
+                }
+
+                $session->remove('hash');
+
+            }
+
+
+
+
+
+
+
             try {
 
                 $em->flush();
@@ -43,8 +80,7 @@ class RegisterController extends Controller
             } catch (\Exception $exception) {
 
 
-                echo 'ohjee'; exit;
-                //hier kan het mis gaan
+                echo 'error'; exit;
 
             }
 

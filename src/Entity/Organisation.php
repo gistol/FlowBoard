@@ -8,6 +8,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -23,19 +24,38 @@ class Organisation implements \JsonSerializable
     private $id;
 
     /**
+     * @Assert\NotBlank(
+     *     message="Organisation name can not be blank"
+     * )
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 25,
+     *     minMessage = "Organisation name must be at least {{ limit }} characters long",
+     *     maxMessage = "Organisation name cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[_A-z0-9]*((-)*[_A-z0-9])*$/",
+     *     match=true,
+     *     message="Organisation name can not contain spaces or special characters"
+     * )
      * @ORM\Column(type="string", length=25)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $whitelabelJoin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrganisationUsers", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrganisationUsers", mappedBy="organisation")
      */
     private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInvitations", mappedBy="org", cascade={"remove"})
+     */
+    private $invitations;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="organisation", cascade={"remove"})
@@ -100,7 +120,18 @@ class Organisation implements \JsonSerializable
      */
     public function getUsers()
     {
-        return $this->users;
+        if ($this->users === null) return [];
+
+        $out = [];
+
+        foreach ($this->users as $value) {
+            $out[] = [
+                    'user' => $value->getUser(),
+                    'access' => $value->getAccess()
+                ];
+        }
+
+        return $out;
     }
 
     /**
@@ -116,6 +147,7 @@ class Organisation implements \JsonSerializable
      */
     public function getProjects()
     {
+        if ($this->projects === null) return [];
         $out = [];
 
         foreach ($this->projects as $project) $out[] = $project;
@@ -129,6 +161,22 @@ class Organisation implements \JsonSerializable
     public function setProjects($projects): void
     {
         $this->projects = $projects;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInvitations()
+    {
+        return $this->invitations;
+    }
+
+    /**
+     * @param mixed $invitations
+     */
+    public function setInvitations($invitations): void
+    {
+        $this->invitations = $invitations;
     }
 
     /**
@@ -151,6 +199,8 @@ class Organisation implements \JsonSerializable
     {
         return [
             'name' => $this->getName(),
+            'user_count' => count($this->getUsers()),
+            'users' => $this->getUsers(),
             'projects' => $this->getProjects()
         ];
     }

@@ -3,6 +3,18 @@ import mutations from '../consts/mutationConsts';
 
 export default {
 
+    [mutations.SET_ORGANISATION] (state, data) {
+
+        Vue.set(state, 'org', data);
+
+    },
+
+    [mutations.SAVE_ORGANISATIONS] (state, orgs) {
+
+        Vue.set(state, 'organisations', orgs);
+
+    },
+
     [mutations.SAVE_TOKEN] (state, token) {
 
         state.token = token;

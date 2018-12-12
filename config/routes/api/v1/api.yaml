@@ -1,5 +1,15 @@
 # GET ROUTES
 
+get_org_user_v1:
+  path: /organisations/get
+  defaults: { _controller: App\Controller\ApiControllers\V1\OrganisationsController::getOrganisations }
+  methods: [ GET, OPTIONS ]
+
+get_org_info_v1:
+  path: /{org}/info
+  defaults: { _controller: App\Controller\ApiControllers\V1\OrganisationsController::getOrganisation }
+  methods: [ GET, OPTIONS ]
+
 get_projects_v1:
   path: /{org}/projects
   defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::getProjects }
@@ -22,9 +32,19 @@ get_org_columns_v1:
 
 # POST ROUTES
 
+create_org_user_v1:
+  path: /organisation/create
+  defaults: { _controller: App\Controller\ApiControllers\V1\OrganisationsController::createOrganisation }
+  methods: [ POST, OPTIONS ]
+
 project_create_v1:
   path: /{org}/project/create
   defaults: { _controller: App\Controller\ApiControllers\V1\ProjectController::createProject }
+  methods: [ POST, OPTIONS ]
+
+user_invite_v1:
+  path: /{org}/user/invite
+  defaults: { _controller: App\Controller\ApiControllers\V1\UserController::invite }
   methods: [ POST, OPTIONS ]
 
 column_create_v1:
@@ -38,6 +58,11 @@ issue_create_v1:
   methods: [ POST, OPTIONS ]
 
 # PUT ROUTES
+
+user_update_v1:
+  path: /{org}/user/update
+  defaults: { _controller: App\Controller\ApiControllers\V1\UserController::update }
+  methods: [ PUT, OPTIONS ]
 
 issue_move_v1:
   path: /{org}/{project}/issue/move

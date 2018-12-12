@@ -30,6 +30,18 @@
       :update="updateFunc"
       :close="close"
     />
+    <modal-create-org
+      v-if="show.modalCreateOrg"
+      :payload="payload"
+      :update="updateFunc"
+      :close="close"
+    />
+    <modal-create-user
+      v-if="show.modalCreateUser"
+      :payload="payload"
+      :update="updateFunc"
+      :close="close"
+    />
   </div>
 </template>
 
@@ -42,10 +54,14 @@
     import ModalCreateColumn from "./modalCreateColumn.vue";
     import ModalUpdateIssue from "./modalUpdateIssue.vue";
     import ModalCreateProject from "./modalCreateProject.vue";
+    import ModalCreateOrg from "./modalCreateOrg.vue";
+    import ModalCreateUser from "./modalCreateUser.vue";
 
     export default {
         name: 'ModalLoader',
         components: {
+            ModalCreateUser,
+            ModalCreateOrg,
             ModalCreateProject,
             ModalUpdateIssue,
             ModalCreateColumn,
@@ -59,6 +75,8 @@
                     modalCreateColumn: false,
                     modalCreateIssue: false,
                     modalUpdateIssue: false,
+                    modalCreateUser: false,
+                    modalCreateOrg: false,
                     modalShowIssue: false
                 },
                 payload: {},

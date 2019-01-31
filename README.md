@@ -4,9 +4,13 @@ Jira only than better
 
 # Clone the project
 
-run composer install and edit your .env file to the required settings. See .env.dist for more information.
+run -> composer install 
 
-run npm install 
+Edit your .env file to the required settings. See .env.dist for more information.
+
+run -> npm install 
+
+run -> npm run build
 
 ## Creation of the hosts:
 

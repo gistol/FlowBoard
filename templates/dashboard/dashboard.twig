@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dashboard | Flowboard
+{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}" />
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="app">
+        Application is loading...
+    </div>
+
+    <meta id="token" content="{{ token }}" />
+
+    <script src="{{ asset('dist/main.bundle.js') }}" type="text/javascript"></script>
+
+{% endblock %}

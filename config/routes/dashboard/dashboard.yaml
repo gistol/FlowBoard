@@ -1,0 +1,9 @@
+main_dashboard:
+  path: /
+  defaults: { _controller: App\Controller\DashboardControllers\DashboardController::dashboard }
+  methods: [ GET ]
+
+user_img:
+  path: /img/user/{email}
+  defaults: { _controller: App\Controller\DashboardControllers\DashboardController::renderImgUser }
+  methods: [ GET ]

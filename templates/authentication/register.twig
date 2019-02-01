@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Register | Flowboard
+{% endblock %}
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/pages/authentication.css') }}" />
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="bootstrap-wrapper">
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <img
+                        src="{{ asset('img/logo-light.svg') }}"
+                        alt="flowboard-logo-light"
+                        class="authentication-logo"
+                    >
+                </div>
+
+
+                <div class="col-md-4 offset-md-4 authentication-container">
+
+                    <h1>Register</h1>
+
+                    <p>You can login <a href="{{ path('login') }}">here</a></p>
+
+                    {% for flashMessage in app.session.flashbag.get('1') %}
+                        <p class="message-box">
+                            {{ flashMessage | raw }}
+                        </p>
+                    {% endfor %}
+
+                    {% for flashMessage in app.session.flashbag.get('2') %}
+                        <p class="error-box">
+                            {{ flashMessage | raw }}
+                        </p>
+                    {% endfor %}
+
+                    <form action="{{ path("register") }}" method="post">
+
+                        <div class="field-set">
+
+                            <div class="field-title">
+                                <p>{{ form_label(form.email, null, { 'label_attr': {'class': 'form-placeholder'} }) }}</p>
+                            </div>
+
+                            <div class="field-value">
+                                {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+
+                            <div class="half" style="float: left;width: 47%; position: relative; margin-right: 3%">
+                                <div class="field-set">
+
+                                    <div class="field-title">
+                                        <p>{{ form_label(form.firstname, null, { 'label_attr': {'class': 'form-placeholder'} }) }}</p>
+                                    </div>
+
+                                    <div class="field-value">
+                                        {{ form_widget(form.firstname, { 'attr': {'class': 'form-control'} }) }}
+                                        {{ form_errors(form.firstname) }}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="half" style="float: left;width: 50%; position: relative">
+                                <div class="field-set">
+
+                                    <div class="field-title">
+                                        <p>{{ form_label(form.lastname, null, { 'label_attr': {'class': 'form-placeholder'} }) }}</p>
+                                    </div>
+
+                                    <div class="field-value">
+                                        {{ form_widget(form.lastname, { 'attr': {'class': 'form-control'} }) }}
+                                        {{ form_errors(form.lastname) }}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-set">
+
+                            <div class="field-title">
+                                {{ form_label(form.password.first, null, { 'label_attr': {'class': 'form-placeholder'} }) }}
+                            </div>
+
+                            <div class="field-value">
+                                {{ form_widget(form.password.first, { 'attr': {'class': 'form-control' } }) }}
+                                {{ form_errors(form.password.first) }}
+                            </div>
+
+                        </div>
+
+                        <div class="field-set">
+
+                            <div class="field-title">
+                                {{ form_label(form.password.second, null, { 'label_attr': {'class': 'form-placeholder'} }) }}
+                            </div>
+
+                            <div class="field-value">
+                                {{ form_widget(form.password.second, { 'attr': {'class': 'form-control' } }) }}
+                                {{ form_errors(form.password.second) }}
+                            </div>
+
+                        </div>
+
+
+                        {{ form_rest(form) }}
+
+                        <button type="submit" class="btn btn-default button" id="_submit" name="_submit">
+                            Sign-up
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

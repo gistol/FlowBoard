@@ -1,0 +1,4 @@
+dev_dashboard:
+  resource: '../dashboard/dashboard.yaml'
+  prefix: /
+  host: dashboard.flowboard.local

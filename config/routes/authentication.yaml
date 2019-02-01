@@ -1,0 +1,4 @@
+authentication:
+  resource: 'authentication/authentication.yaml'
+  prefix: /
+  host: authentication.flowboard.app

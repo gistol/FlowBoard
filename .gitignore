@@ -3,6 +3,8 @@
 /.env.local
 /.env.*.local
 /public/bundles/
+public/dist/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+node_modules

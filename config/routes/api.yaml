@@ -1,0 +1,4 @@
+api_v1:
+  resource: 'api/v1/api.yaml'
+  prefix: /v1
+  host: api.flowboard.app

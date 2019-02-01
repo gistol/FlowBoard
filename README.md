@@ -1,5 +1,5 @@
 # FlowBoard
-Jira only than better
+Trello like board in Symfony 4
 
 
 # Clone the project
